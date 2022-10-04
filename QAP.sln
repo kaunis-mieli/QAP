@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAP.UnitOfWork", "QAP.UnitOfWork\QAP.UnitOfWork.csproj", "{45A19440-F233-419E-AEA1-402885D02C3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAP.UnitOfWork", "QAP.UnitOfWork\QAP.UnitOfWork.csproj", "{45A19440-F233-419E-AEA1-402885D02C3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAP.SQL", "QAP.SQL\QAP.SQL.csproj", "{55C3F194-1B5C-42F0-9C1B-07E598A21F00}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAP.SQL", "QAP.SQL\QAP.SQL.csproj", "{55C3F194-1B5C-42F0-9C1B-07E598A21F00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAP.WebAPI", "QAP.WebAPI\QAP.WebAPI.csproj", "{1F25D65A-7432-4B63-9E44-7A661EC76172}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAP.WebAPI", "QAP.WebAPI\QAP.WebAPI.csproj", "{1F25D65A-7432-4B63-9E44-7A661EC76172}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAP.DataContext", "QAP.DataContext\QAP.DataContext.csproj", "{46FBCA7C-7B2C-4709-AF1E-523CD15F9580}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAP.DataContext", "QAP.DataContext\QAP.DataContext.csproj", "{46FBCA7C-7B2C-4709-AF1E-523CD15F9580}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QAP.Repository", "QAP.Repository\QAP.Repository.csproj", "{F1B7DFCF-10E7-4C42-B06A-EAF960F4EC16}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "QAP.Repository", "QAP.Repository\QAP.Repository.csproj", "{F1B7DFCF-10E7-4C42-B06A-EAF960F4EC16}"
 EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "qap.frontend", "QAP.Frontend\qap.frontend.esproj", "{B59ADFB9-52D6-4F74-ADEA-25644D82F40B}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "QAP.Frontend", "QAP.Frontend\QAP.Frontend.esproj", "{B59ADFB9-52D6-4F74-ADEA-25644D82F40B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
