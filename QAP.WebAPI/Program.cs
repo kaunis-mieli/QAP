@@ -1,3 +1,7 @@
+using QAP.DataContext;
+using QAP.Repository.Repositories.ProblemRepo;
+using QAP.UnitOfWork.UnitOfWork;
+
 namespace QAP.WebAPI
 {
     public class Program
@@ -13,7 +17,13 @@ namespace QAP.WebAPI
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            builder.Services.AddDbContext<IQAPDBContext, QAPDBContext>();
+            builder.Services.AddTransient<ProblemRepo>();
+            builder.Services.AddTransient<ProblemUnitOfWork>();
+
             var app = builder.Build();
+
+            app.UseCors("CorsApi");
 
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
