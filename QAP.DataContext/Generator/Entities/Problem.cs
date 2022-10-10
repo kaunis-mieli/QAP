@@ -17,10 +17,10 @@ namespace QAP.DataContext
     {
         public int Id { get; set; } // Id (Primary key)
         public short Size { get; set; } // Size
-        public string Type { get; set; } // Type (length: 255)
         public byte[] MatrixA { get; set; } // MatrixA
         public byte[] MatrixB { get; set; } // MatrixB
-        public byte[] Hash { get; set; } // Hash (length: 20)
+        public byte[] Hash { get; set; } // Hash (length: 32)
+        public DateTime CreatedAt { get; set; } // CreatedAt
         public string Alias { get; set; } // Alias (length: 255)
         public string Title { get; set; } // Title (length: 255)
         public string Description { get; set; } // Description (length: 1073741823)
@@ -34,6 +34,7 @@ namespace QAP.DataContext
 
         public Problem()
         {
+            CreatedAt = DateTime.Now;
             Solutions = new List<Solution>();
         }
     }

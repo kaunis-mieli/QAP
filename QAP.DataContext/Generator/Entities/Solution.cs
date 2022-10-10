@@ -12,10 +12,10 @@ namespace QAP.DataContext
     public class Solution
     {
         public long Id { get; set; } // Id (Primary key)
-        public short Size { get; set; } // Size
-        public float Fitness { get; set; } // Fitness
+        public float Cost { get; set; } // Cost
         public byte[] Permutation { get; set; } // Permutation
         public int ProblemId { get; set; } // ProblemId
+        public DateTime CreatedAt { get; set; } // CreatedAt
 
         // Foreign keys
 
@@ -23,6 +23,11 @@ namespace QAP.DataContext
         /// Parent Problem pointed by [Solution].([ProblemId]) (FK_Solution_Problem)
         /// </summary>
         public virtual Problem Problem { get; set; } // FK_Solution_Problem
+
+        public Solution()
+        {
+            CreatedAt = DateTime.Now;
+        }
     }
 
 }

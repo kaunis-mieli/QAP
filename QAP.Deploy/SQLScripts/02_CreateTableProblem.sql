@@ -13,27 +13,18 @@ BEGIN
 			CREATE TABLE [dbo].[Problem] (
 				[Id]			INT			NOT NULL	IDENTITY,
 				[Size]			SMALLINT		NOT NULL,
-				[Type]			VARCHAR(255)	NOT NULL,
 				[MatrixA]		VARBINARY(MAX)	NOT NULL,				
 				[MatrixB]		VARBINARY(MAX)	NOT NULl,
-				[Hash]			BINARY(20)		NOT NULL,
+				[Hash]			BINARY(32)		NOT NULL,
+				[CreatedAt]		DATETIME		NOT NULL DEFAULT GETDATE(),
 				[Alias]			VARCHAR(255)	NULL,
 				[Title]			NVARCHAR(255)	NULL,
-				[Description]	NTEXT			NULL
-			)
+				[Description]	NTEXT			NULL,
+				CONSTRAINT [PK_ProblemId] PRIMARY KEY NONCLUSTERED ([Id]),
+				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash])
+			);
 			
 			PRINT '	Table "Problem" has been created'
-
-			--Add Primary Key
-			ALTER TABLE [dbo].[Problem] 
-				ADD CONSTRAINT PK_ProblemId PRIMARY KEY NONCLUSTERED (Id);
-
-			PRINT '	"PK_ProblemId" PK added to "[dbo].[Problem]"'
-
-			--Create index
-			CREATE INDEX IX_ProblemHash	ON [dbo].[Problem] ([Hash]);
-
-			PRINT '	Index "IX_ProblemHash" has been created'
 		END
 		ELSE
 		BEGIN

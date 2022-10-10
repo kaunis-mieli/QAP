@@ -15,10 +15,10 @@ namespace QAP.DataContext
             builder.HasKey(x => x.Id).HasName("PK_SolutionId");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("bigint").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
-            builder.Property(x => x.Size).HasColumnName(@"Size").HasColumnType("smallint").IsRequired();
-            builder.Property(x => x.Fitness).HasColumnName(@"Fitness").HasColumnType("real").IsRequired();
+            builder.Property(x => x.Cost).HasColumnName(@"Cost").HasColumnType("real").IsRequired();
             builder.Property(x => x.Permutation).HasColumnName(@"Permutation").HasColumnType("varbinary(max)").IsRequired();
             builder.Property(x => x.ProblemId).HasColumnName(@"ProblemId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.CreatedAt).HasColumnName(@"CreatedAt").HasColumnType("datetime").IsRequired();
 
             // Foreign keys
             builder.HasOne(a => a.Problem).WithMany(b => b.Solutions).HasForeignKey(c => c.ProblemId).HasConstraintName("FK_Solution_Problem");

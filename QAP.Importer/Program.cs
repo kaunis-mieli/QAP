@@ -1,10 +1,17 @@
-﻿namespace QAP.Importer
+﻿namespace QAP.Importer;
+
+internal class Program
 {
-    internal class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
+        try
         {
-            Console.WriteLine("Hello, World!");
+            Importer.Import();
         }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        
     }
 }
