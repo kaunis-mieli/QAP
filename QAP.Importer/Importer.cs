@@ -113,7 +113,7 @@ internal class Importer
         if (parsedLines.Count != parsedLines[0][0] * 2 + 1 ||
             parsedLines.Skip(1).Any(inlinedArray => inlinedArray.Length != parsedLines[0][0]))
         {
-            throw new ArgumentException($"{file} has wrong is broken, cannot be ready.");
+            throw new ArgumentException($"{file} is broken, cannot be read.");
         }
     }
 
