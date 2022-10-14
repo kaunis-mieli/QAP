@@ -1,11 +1,9 @@
-# QAP
+#Thesis
+## QAP
+QAP Acronym stands for Quadratic Assignment Problem.
 
-Ðis darbas skirtas iðspræsti kvadratinio paskirstymo uþdaviná naudojant lokalia paieðka grástu algoritmu.
+##Authorship
+Vytis Mikasauskas
 
-## Darbà atlieka
-
-Vytis Mikaðauskas
-
-## Darbo vadovas
-
-Alfonsas Misevièius
+##Supervisor
+Alfonsas Misevicius
