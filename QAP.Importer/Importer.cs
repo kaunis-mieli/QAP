@@ -34,8 +34,8 @@ internal class Importer
                 var a = BinaryHelpers.ToBytes(matrixA);
                 var b = BinaryHelpers.ToBytes(matrixB);
 
-                Console.WriteLine("A hash: " + BitConverter.ToString(a));
-                Console.WriteLine("B hash: " + BitConverter.ToString(b));
+                Console.WriteLine("A: " + BitConverter.ToString(a));
+                Console.WriteLine("B: " + BitConverter.ToString(b));
             }
             else
             {
