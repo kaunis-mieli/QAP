@@ -1,9 +1,12 @@
-# Bachelor's Thesis
-## QAP
-QAP Acronym stands for Quadratic Assignment Problem.
+# QAP
 
 ## Authorship
 Vytis Mikasauskas
 
-## Supervisor
-Alfonsas Misevicius
+## Darbà atlieka
+
+Vytis Mikaðauskas
+
+## Darbo vadovas
+
+Alfonsas Misevièius
