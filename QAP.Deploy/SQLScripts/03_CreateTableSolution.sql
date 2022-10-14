@@ -12,8 +12,8 @@ BEGIN
 			--Create table
 			CREATE TABLE [dbo].[Solution] (
 				[Id]			BIGINT			NOT NULL	IDENTITY,
-				[Cost]			REAL			NOT NULL,
-				[Permutation]	VARBINARY(MAX)	NOT NULL,
+				[Cost]			BIGINT			NOT NULL,
+				[Permutation]	VARBINARY(MAX)		NULL,
 				[ProblemId]		INT				NOT NULL,
 				[CreatedAt]		DATETIME		NOT NULL	DEFAULT GETDATE(),
 				CONSTRAINT [PK_SolutionId] PRIMARY KEY NONCLUSTERED ([Id]),

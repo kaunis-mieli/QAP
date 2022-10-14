@@ -11,14 +11,14 @@ BEGIN
 		BEGIN
 			--Create table
 			CREATE TABLE [dbo].[Problem] (
-				[Id]			INT			NOT NULL	IDENTITY,
-				[Size]			SMALLINT		NOT NULL,
+				[Id]			INT				NOT NULL	IDENTITY,
+				[Size]			INT				NOT NULL,
 				[MatrixA]		VARBINARY(MAX)	NOT NULL,				
 				[MatrixB]		VARBINARY(MAX)	NOT NULl,
 				[Hash]			BINARY(32)		NOT NULL,
 				[CreatedAt]		DATETIME		NOT NULL DEFAULT GETDATE(),
 				[Alias]			VARCHAR(255)	NULL,
-				[Title]			NVARCHAR(255)	NULL,
+				[Title]			NTEXT			NULL,
 				[Description]	NTEXT			NULL,
 				CONSTRAINT [PK_ProblemId] PRIMARY KEY NONCLUSTERED ([Id]),
 				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash])

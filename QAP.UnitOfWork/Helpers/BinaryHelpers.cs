@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace QAP.UnitOfWork.Helpers;
 
@@ -15,8 +14,7 @@ public static class BinaryHelpers
     {
         using var stream = new MemoryStream();
 
-        var formatter = new BinaryFormatter();
-        formatter.Serialize(stream, source);
+        new BinaryFormatter().Serialize(stream, source);
 
         return stream.ToArray();
     }
@@ -27,7 +25,12 @@ public static class BinaryHelpers
         stream.Write(source, 0, source.Length);
         stream.Seek(0, SeekOrigin.Begin);
 
-        var formatter = new BinaryFormatter();
-        return (T)formatter.Deserialize(stream);
+        return (T)new BinaryFormatter().Deserialize(stream);
+    }
+
+    public static byte[] GetHash(IEnumerable<byte> source)
+    {
+        using var hasher = SHA256.Create();
+        return hasher.ComputeHash(source.ToArray());
     }
 }

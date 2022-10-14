@@ -1,62 +1,124 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-using System.Runtime.Serialization.Formatters.Binary;
-using MathNet.Numerics.LinearAlgebra;
-using MathNet.Numerics.LinearAlgebra.Double;
+﻿using QAP.DataContext;
 using QAP.UnitOfWork.Helpers;
+using QAP.UnitOfWork.UnitOfWork;
+using System.Text.RegularExpressions;
 
 namespace QAP.Importer;
 
 internal class Importer
 {
-    public static void Import()
+    private readonly ImportUnitOfWork importUnitOfWork;
+
+    private List<Problem> existingProblems;
+
+    public Importer(ImportUnitOfWork importUnitOfWork)
     {
-        var lines = File.ReadAllLines(@"Data\esc128.dat")
-            .Where(line => line.Trim().Length > 0)
-            .Select(line => line.Trim())
-            .ToList();
+        this.importUnitOfWork = importUnitOfWork;
+    }
 
-        Console.WriteLine($"File read. {lines.Count} lines");
+    public void Import(string directory)
+    {
+        existingProblems = importUnitOfWork.GetAllProblems();
 
-        var size = Convert.ToInt32(lines.First());
-
-        if ((size * 2 + 1) == lines.Count)
+        foreach (var file in Directory.GetFiles(directory))
         {
-            var matrixA = ToOneDimensionMatrix(lines, size, 1);
-            var matrixB = ToOneDimensionMatrix(lines, size, 1 + size);
-
-            if (matrixA.Length == matrixB.Length && matrixA.Length == size * size)
-            {
-                var a = BinaryHelpers.ToBytes(matrixA);
-                var b = BinaryHelpers.ToBytes(matrixB);
-
-                Console.WriteLine("A: " + BitConverter.ToString(a));
-                Console.WriteLine("B: " + BitConverter.ToString(b));
-            }
-            else
-            {
-                throw new ArgumentException("Wrong data input dimension.");
-            }
+            ProcessFile(file);
         }
-        else
+
+        importUnitOfWork.Save();
+    }
+
+    private void ProcessFile(string file)
+    {
+        try
         {
-            throw new ArgumentException("Wrong data input dimension.");
+            var parsedLines = ParseLines(file);
+
+            Validate(parsedLines, file);
+
+            byte[] serializedMatrixA, serializedMatrixB;
+            SerializeMatrices(parsedLines, out serializedMatrixA, out serializedMatrixB);
+
+            var hash = BinaryHelpers.GetHash(Enumerable.Concat(serializedMatrixA, serializedMatrixB));
+
+            ProcessProblem(file, parsedLines, serializedMatrixA, serializedMatrixB, hash);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
         }
     }
 
-    private static double[] ToOneDimensionMatrix(List<string> lines, int size, int skipSize)
+    private void ProcessProblem(string file, List<int[]> parsedLines, byte[] serializedMatrixA, byte[] serializedMatrixB, byte[] hash)
     {
-        return lines
-            .Skip(skipSize)
-            .Take(size)
-            .SelectMany(line => line
-                .Split(' ')
-                .Select(str => double.Parse(str))
-                .ToArray())
+        if (!existingProblems.Any(problem => Enumerable.SequenceEqual(problem.Hash, hash)))
+        {
+            var shortName = Path.GetFileNameWithoutExtension(file);
+
+            var problem = new Problem()
+            {
+                Size = parsedLines[0][0],
+                Title = $"{shortName.ToUpper()}: N = {parsedLines[0][0]}",
+                Alias = shortName.ToLower(),
+                Hash = hash,
+                MatrixA = serializedMatrixA,
+                MatrixB = serializedMatrixB
+            };
+
+            if (parsedLines[0].Length > 1)
+            {
+                problem.Solutions.Add(new Solution() { Cost = parsedLines[0][1] });
+            }
+
+            importUnitOfWork.CreateProblem(problem);
+            existingProblems.Add(problem);
+
+            Console.Write($".");
+        }
+        else
+        {
+            throw new Exception($"{file} already exists in database, so it will be skipped.");
+        }
+    }
+
+    private static void SerializeMatrices(List<int[]> parsedLines, out byte[] serializedMatrixA, out byte[] serializedMatrixB)
+    {
+        var matrixA = parsedLines
+            .Skip(1)
+            .Take(parsedLines[0][0])
+            .SelectMany(x => x)
             .ToArray();
+
+        var matrixB = parsedLines
+            .Skip(1 + parsedLines[0][0])
+            .Take(parsedLines[0][0])
+            .SelectMany(x => x)
+            .ToArray();
+
+        serializedMatrixA = BinaryHelpers.ToBytes(matrixA);
+        serializedMatrixB = BinaryHelpers.ToBytes(matrixB);
+    }
+
+    private static List<int[]> ParseLines(string file)
+    {
+        return File.ReadAllLines(file)
+            .Select(line => RemoveWhitespaces(line).Trim())
+            .Where(line => line.Length > 0)
+            .Select(line => line.Split().Select(part => int.Parse(part)).ToArray())
+            .ToList();
+    }
+
+    private static void Validate(List<int[]> parsedLines, string file)
+    {
+        if (parsedLines.Count != parsedLines[0][0] * 2 + 1 ||
+            parsedLines.Skip(1).Any(inlinedArray => inlinedArray.Length != parsedLines[0][0]))
+        {
+            throw new ArgumentException($"{file} has wrong is broken, cannot be ready.");
+        }
+    }
+
+    private static string RemoveWhitespaces(string dirtyString)
+    {
+        return Regex.Replace(dirtyString, @"\s+", " ");
     }
 }

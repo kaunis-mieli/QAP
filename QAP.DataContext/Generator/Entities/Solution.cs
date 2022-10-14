@@ -12,7 +12,7 @@ namespace QAP.DataContext
     public class Solution
     {
         public long Id { get; set; } // Id (Primary key)
-        public float Cost { get; set; } // Cost
+        public long Cost { get; set; } // Cost
         public byte[] Permutation { get; set; } // Permutation
         public int ProblemId { get; set; } // ProblemId
         public DateTime CreatedAt { get; set; } // CreatedAt

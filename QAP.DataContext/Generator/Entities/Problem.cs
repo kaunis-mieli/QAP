@@ -16,13 +16,13 @@ namespace QAP.DataContext
     public class Problem
     {
         public int Id { get; set; } // Id (Primary key)
-        public short Size { get; set; } // Size
+        public int Size { get; set; } // Size
         public byte[] MatrixA { get; set; } // MatrixA
         public byte[] MatrixB { get; set; } // MatrixB
         public byte[] Hash { get; set; } // Hash (length: 32)
         public DateTime CreatedAt { get; set; } // CreatedAt
         public string Alias { get; set; } // Alias (length: 255)
-        public string Title { get; set; } // Title (length: 255)
+        public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
 
         // Reverse navigation
