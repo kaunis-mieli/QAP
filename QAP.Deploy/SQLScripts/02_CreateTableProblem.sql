@@ -13,15 +13,16 @@ BEGIN
 			CREATE TABLE [dbo].[Problem] (
 				[Id]			INT				NOT NULL	IDENTITY,
 				[Size]			INT				NOT NULL,
-				[MatrixA]		VARBINARY(MAX)	NOT NULL,				
+				[MatrixA]		VARBINARY(MAX)	NOT NULL,
 				[MatrixB]		VARBINARY(MAX)	NOT NULl,
 				[Hash]			BINARY(32)		NOT NULL,
 				[CreatedAt]		DATETIME		NOT NULL DEFAULT GETDATE(),
-				[Alias]			VARCHAR(255)	NULL,
+				[Alias]			VARCHAR(255)	NOT NULL,
 				[Title]			NTEXT			NULL,
 				[Description]	NTEXT			NULL,
 				CONSTRAINT [PK_ProblemId] PRIMARY KEY NONCLUSTERED ([Id]),
-				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash])
+				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash]),
+				CONSTRAINT [UQ_ProblemAlias] UNIQUE ([Alias])
 			);
 			
 			PRINT '	Table "Problem" has been created'

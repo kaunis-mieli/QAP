@@ -12,9 +12,9 @@ internal class Program
         {
             var context = new QAPDBContext();
             var problemRepo = new ProblemRepo(context);
-            var importUnitOfWork = new ImportUnitOfWork(problemRepo);
+            var problemUnitOfWork = new ProblemUnitOfWork(problemRepo);
 
-            var importer = new Importer(importUnitOfWork);
+            var importer = new Importer(problemUnitOfWork);
             importer.Import("Data");
             
         }

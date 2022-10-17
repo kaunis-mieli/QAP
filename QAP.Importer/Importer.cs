@@ -1,4 +1,5 @@
 ﻿using QAP.DataContext;
+using QAP.MvvM.Problem;
 using QAP.UnitOfWork.Helpers;
 using QAP.UnitOfWork.UnitOfWork;
 using System.Text.RegularExpressions;
@@ -7,25 +8,21 @@ namespace QAP.Importer;
 
 internal class Importer
 {
-    private readonly ImportUnitOfWork importUnitOfWork;
+    private readonly ProblemUnitOfWork problemUnitOfWork;
 
-    private List<Problem> existingProblems;
-
-    public Importer(ImportUnitOfWork importUnitOfWork)
+    public Importer(ProblemUnitOfWork problemUnitOfWork)
     {
-        this.importUnitOfWork = importUnitOfWork;
+        this.problemUnitOfWork = problemUnitOfWork;
     }
 
     public void Import(string directory)
     {
-        existingProblems = importUnitOfWork.GetAllProblems();
-
         foreach (var file in Directory.GetFiles(directory))
         {
             ProcessFile(file);
         }
 
-        importUnitOfWork.Save();
+        problemUnitOfWork.Save();
     }
 
     private void ProcessFile(string file)
@@ -36,48 +33,18 @@ internal class Importer
 
             Validate(parsedLines, file);
 
-            byte[] serializedMatrixA, serializedMatrixB;
-            SerializeMatrices(parsedLines, out serializedMatrixA, out serializedMatrixB);
+            SerializeMatrices(parsedLines, out byte[] binaryMatrixA, out byte[] binaryMatrixB);
 
-            var hash = BinaryHelpers.GetHash(Enumerable.Concat(serializedMatrixA, serializedMatrixB));
+            var shortName = Path.GetFileNameWithoutExtension(file);
 
-            ProcessProblem(file, parsedLines, serializedMatrixA, serializedMatrixB, hash);
+            problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null, 
+                binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
+
+            Console.Write(".");
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
-        }
-    }
-
-    private void ProcessProblem(string file, List<int[]> parsedLines, byte[] serializedMatrixA, byte[] serializedMatrixB, byte[] hash)
-    {
-        if (!existingProblems.Any(problem => Enumerable.SequenceEqual(problem.Hash, hash)))
-        {
-            var shortName = Path.GetFileNameWithoutExtension(file);
-
-            var problem = new Problem()
-            {
-                Size = parsedLines[0][0],
-                Title = $"{shortName.ToUpper()}: N = {parsedLines[0][0]}",
-                Alias = shortName.ToLower(),
-                Hash = hash,
-                MatrixA = serializedMatrixA,
-                MatrixB = serializedMatrixB
-            };
-
-            if (parsedLines[0].Length > 1)
-            {
-                problem.Solutions.Add(new Solution() { Cost = parsedLines[0][1] });
-            }
-
-            importUnitOfWork.CreateProblem(problem);
-            existingProblems.Add(problem);
-
-            Console.Write($".");
-        }
-        else
-        {
-            throw new Exception($"{file} already exists in database, so it will be skipped.");
         }
     }
 

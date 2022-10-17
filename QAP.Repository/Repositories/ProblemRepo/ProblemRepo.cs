@@ -1,4 +1,5 @@
-﻿using QAP.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using QAP.DataContext;
 using QAP.Repository.Repositories.Base;
 using System;
 using System.Collections.Generic;
@@ -10,22 +11,26 @@ namespace QAP.Repository.Repositories.ProblemRepo
 {
     public class ProblemRepo : BaseRepository<Problem>
     {
-        public ProblemRepo(IQAPDBContext context) : base(context)
-        {
-        }
+        public ProblemRepo(IQAPDBContext context) : base(context) { }
 
-        public List<Problem> GetAll()
+        public List<Problem> GetAllShallow()
         {
             return context.Problems.ToList();
         }
 
-        public void Add(string text)
+        public Problem GetProblemByAliasShallow(string alias)
         {
-            Insert(new Problem()
-            {
-                MatrixA = Encoding.UTF8.GetBytes(text),
-                MatrixB = Encoding.UTF8.GetBytes(text)
-            });
+            return context.Problems
+                .Where(problem => problem.Alias.ToLower().Equals(alias.ToLower()))
+                .First();
+        }
+
+        public Problem GetProblemWithSolutionsByAlias(string alias)
+        {
+            return context.Problems
+                .Include(problem => problem.Solutions)
+                .Where(problem => problem.Alias.ToLower().Equals(alias.ToLower()))
+                .First();
         }
     }
 }
