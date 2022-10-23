@@ -37,8 +37,8 @@ internal class Importer
 
             var shortName = Path.GetFileNameWithoutExtension(file);
 
-            problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null, 
-                binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
+            problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null,
+                parsedLines[0][0], binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
 
             Console.Write(".");
         }

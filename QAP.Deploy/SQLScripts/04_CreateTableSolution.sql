@@ -29,9 +29,7 @@ BEGIN
 		BEGIN
 			PRINT '	Table "Solution" already exists'
 		END
-
 		COMMIT TRANSACTION;
-
 	END TRY
 	BEGIN CATCH
 		ROLLBACK TRANSACTION;

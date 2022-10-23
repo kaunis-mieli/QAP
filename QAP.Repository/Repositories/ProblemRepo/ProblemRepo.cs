@@ -32,5 +32,12 @@ namespace QAP.Repository.Repositories.ProblemRepo
                 .Where(problem => problem.Alias.ToLower().Equals(alias.ToLower()))
                 .First();
         }
+
+        public List<string> GetAliases()
+        {
+            return context.Problems
+                .Select(x => x.Alias)
+                .ToList();
+        } 
     }
 }

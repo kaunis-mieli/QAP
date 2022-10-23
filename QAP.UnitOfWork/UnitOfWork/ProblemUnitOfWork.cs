@@ -26,7 +26,12 @@ namespace QAP.UnitOfWork.UnitOfWork
             return ConversionHelpers.GetProblemModels(problemRepo.GetAllShallow());
         }
 
-        public void AddProblemWithOnePermutation(string alias, string title, string description, byte[] binaryMatrixA, byte[] binaryMatrixB,
+        public List<string> GetAliases()
+        {
+            return problemRepo.GetAliases();
+        }
+
+        public void AddProblemWithOnePermutation(string alias, string title, string description, int size, byte[] binaryMatrixA, byte[] binaryMatrixB,
             long cost, byte[] permutation)
         {
             if (existingProblems is null)
@@ -45,6 +50,7 @@ namespace QAP.UnitOfWork.UnitOfWork
                     Title = title,
                     Description = description,
                     Hash = hash,
+                    Size = size,
                     MatrixA = binaryMatrixA,
                     MatrixB = binaryMatrixB,
                     Solutions = {
@@ -62,6 +68,12 @@ namespace QAP.UnitOfWork.UnitOfWork
                 throw new Exception($"{alias} already exists in database, so it will be skipped.");
             }
         }
+
+        public ProblemModel GetProblemWithSolutionsByAlias(string alias)
+        {
+            return ConversionHelpers.GetProblemModel(problemRepo.GetProblemWithSolutionsByAlias(alias));
+        }
+
         public void Save()
         {
             problemRepo.Save();

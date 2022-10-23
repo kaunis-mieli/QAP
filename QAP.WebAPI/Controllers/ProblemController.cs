@@ -16,10 +16,16 @@ namespace QAP.WebAPI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Insert(string text)
+        public IActionResult Index()
         {
-            problemUnitOfWork.Insert(text);
-            return Ok();
+            return Ok(problemUnitOfWork.GetAliases());
+        }
+
+        [HttpGet]
+        [Route("{alias}")]
+        public IActionResult GetProblem(string alias)
+        {
+            return Ok(problemUnitOfWork.GetProblemWithSolutionsByAlias(alias));
         }
     }
 }

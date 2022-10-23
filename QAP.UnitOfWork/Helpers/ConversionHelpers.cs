@@ -51,11 +51,11 @@ namespace QAP.UnitOfWork.Helpers
 
         public static SolutionModel GetSolutionModel(int permutationSizeShouldBe, Solution solution)
         {
-            var permutation = BinaryHelpers.ToOrigin<int[]>(solution.Permutation);
+            var permutation = solution.Permutation is not null ? BinaryHelpers.ToOrigin<int[]>(solution.Permutation) : null;
 
             var toReturn = new SolutionModel();
 
-            if (permutation.Length == permutationSizeShouldBe)
+            if (permutation is null || permutation.Length == permutationSizeShouldBe)
             {
                 toReturn.Permutation = permutation;
                 toReturn.Cost = solution.Cost;
