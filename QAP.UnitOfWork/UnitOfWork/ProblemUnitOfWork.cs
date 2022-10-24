@@ -1,7 +1,7 @@
 ﻿using QAP.DataContext;
 using QAP.MvvM.Problem;
-using QAP.Repository.Repositories.ProblemRepo;
 using QAP.UnitOfWork.Helpers;
+using QAP.UnitOfWork.UnitOfWork.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,25 +10,21 @@ using System.Threading.Tasks;
 
 namespace QAP.UnitOfWork.UnitOfWork
 {
-    public class ProblemUnitOfWork
+    public class ProblemUnitOfWork : BaseUnitOfWork
     {
-        private readonly ProblemRepo problemRepo;
+        
 
         private List<Problem> existingProblems;
 
-        public ProblemUnitOfWork(ProblemRepo problemRepo)
-        {
-            this.problemRepo = problemRepo;
-        }
-
-        public List<ProblemModel> GetAllProblemsShallow()
-        {
-            return ConversionHelpers.GetProblemModels(problemRepo.GetAllShallow());
-        }
+        public ProblemUnitOfWork(IQAPDBContext context)
+            : base(context)
+        { }
 
         public List<string> GetAliases()
         {
-            return problemRepo.GetAliases();
+            return Context.Problems
+                .Select(x => x.Alias)
+                .ToList();
         }
 
         public void AddProblemWithOnePermutation(string alias, string title, string description, int size, byte[] binaryMatrixA, byte[] binaryMatrixB,
@@ -36,7 +32,7 @@ namespace QAP.UnitOfWork.UnitOfWork
         {
             if (existingProblems is null)
             {
-                existingProblems = problemRepo.GetAllShallow();
+                existingProblems = Context.Problems.ToList();
             }
 
             var hash = BinaryHelpers.GetHash(Enumerable.Concat(binaryMatrixA, binaryMatrixB));
@@ -53,30 +49,17 @@ namespace QAP.UnitOfWork.UnitOfWork
                     Size = size,
                     MatrixA = binaryMatrixA,
                     MatrixB = binaryMatrixB,
-                    Solutions = {
-                            new Solution() {
-                                Cost = cost,
-                                Permutation = permutation,
-                            }
-                        }
+                    InitialBestKnownCost = cost
                 };
+
                 existingProblems.Add(problem);
-                problemRepo.Insert(problem);
+
+                Context.Problems.Add(problem);
             }
             else
             {
                 throw new Exception($"{alias} already exists in database, so it will be skipped.");
             }
-        }
-
-        public ProblemModel GetProblemWithSolutionsByAlias(string alias)
-        {
-            return ConversionHelpers.GetProblemModel(problemRepo.GetProblemWithSolutionsByAlias(alias));
-        }
-
-        public void Save()
-        {
-            problemRepo.Save();
         }
     }
 }

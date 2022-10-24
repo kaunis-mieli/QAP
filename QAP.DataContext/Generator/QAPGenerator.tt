@@ -182,6 +182,7 @@
     {
         // Examples:
         //enumDefinitions.Add(new EnumDefinition { Schema = Settings.DefaultSchema, Table = "match_table_name", Column = "match_column_name", EnumType = "name_of_enum" });
+        //enumDefinitions.Add(new EnumDefinition { Schema = Settings.DefaultSchema, Table = "Algorithm", Column = "Id", EnumType = "Algorithm" });
 
         // This will replace OrderHeader.OrderStatus type to be an OrderStatusType enum
         //enumDefinitions.Add(new EnumDefinition { Schema = Settings.DefaultSchema, Table = "OrderHeader", Column = "OrderStatus", EnumType = "OrderStatusType" }); 

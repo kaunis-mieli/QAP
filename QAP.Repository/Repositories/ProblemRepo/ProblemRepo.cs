@@ -25,14 +25,6 @@ namespace QAP.Repository.Repositories.ProblemRepo
                 .First();
         }
 
-        public Problem GetProblemWithSolutionsByAlias(string alias)
-        {
-            return context.Problems
-                .Include(problem => problem.Solutions)
-                .Where(problem => problem.Alias.ToLower().Equals(alias.ToLower()))
-                .First();
-        }
-
         public List<string> GetAliases()
         {
             return context.Problems

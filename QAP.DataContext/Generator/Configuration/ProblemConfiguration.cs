@@ -6,10 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace QAP.DataContext
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
     // Problem
     public class ProblemConfiguration : IEntityTypeConfiguration<Problem>
     {
@@ -27,6 +23,8 @@ namespace QAP.DataContext
             builder.Property(x => x.Alias).HasColumnName(@"Alias").HasColumnType("varchar(255)").IsRequired().IsUnicode(false).HasMaxLength(255);
             builder.Property(x => x.Title).HasColumnName(@"Title").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);
+            builder.Property(x => x.InitialBestKnownCost).HasColumnName(@"InitialBestKnownCost").HasColumnType("bigint").IsRequired(false);
+            builder.Property(x => x.AllTimeBestKnownCost).HasColumnName(@"AllTimeBestKnownCost").HasColumnType("bigint").IsRequired(false);
 
             builder.HasIndex(x => x.Alias).HasDatabaseName("UQ_ProblemAlias").IsUnique();
             builder.HasIndex(x => x.Hash).HasDatabaseName("UQ_ProblemHash").IsUnique();

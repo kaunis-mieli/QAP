@@ -17,11 +17,11 @@ namespace QAP.DataContext
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("bigint").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Cost).HasColumnName(@"Cost").HasColumnType("bigint").IsRequired();
             builder.Property(x => x.Permutation).HasColumnName(@"Permutation").HasColumnType("varbinary(max)").IsRequired(false);
-            builder.Property(x => x.ProblemId).HasColumnName(@"ProblemId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.SessionAlgorithmId).HasColumnName(@"SessionAlgorithmId").HasColumnType("int").IsRequired();
             builder.Property(x => x.CreatedAt).HasColumnName(@"CreatedAt").HasColumnType("datetime").IsRequired();
 
             // Foreign keys
-            builder.HasOne(a => a.Problem).WithMany(b => b.Solutions).HasForeignKey(c => c.ProblemId).HasConstraintName("FK_Solution_Problem");
+            builder.HasOne(a => a.SessionAlgorithm).WithMany(b => b.Solutions).HasForeignKey(c => c.SessionAlgorithmId).HasConstraintName("FK_Solution_SessionAlgorithm");
         }
     }
 

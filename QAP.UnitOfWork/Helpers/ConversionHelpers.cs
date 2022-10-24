@@ -23,23 +23,25 @@ namespace QAP.UnitOfWork.Helpers
             var totalElements = problem.Size * problem.Size;
             var matrixA = BinaryHelpers.ToOrigin<int[]>(problem.MatrixA);
             var matrixB = BinaryHelpers.ToOrigin<int[]>(problem.MatrixB);
-            var solutions = GetSolutionModels(problem.Size, problem.Solutions);
+            //var solutions = GetSolutionModels(problem.Size, problem.Solutions);
 
-            if (matrixA.Length != matrixB.Length || matrixA.Length != totalElements || matrixB.Length != totalElements)
-            {
-                throw new ArgumentException($"Problem #{problem.Id} has wrong sized matrices. |MatrixA| = {matrixA.Length}, |MatrixB| = {matrixB.Length}, Should be {totalElements}");
-            }
+            //if (matrixA.Length != matrixB.Length || matrixA.Length != totalElements || matrixB.Length != totalElements)
+            //{
+            //    throw new ArgumentException($"Problem #{problem.Id} has wrong sized matrices. |MatrixA| = {matrixA.Length}, |MatrixB| = {matrixB.Length}, Should be {totalElements}");
+            //}
 
-            return new ProblemModel()
-            {
-                Size = problem.Size,
-                MatrixA = matrixA,
-                MatrixB = matrixB,
-                Hash = problem.Hash,
-                Alias = problem.Alias,
-                Solutions = solutions,
-                BestCost = solutions.Count > 0 ? solutions.Min(solution => solution.Cost) : null
-            };
+            //return new ProblemModel()
+            //{
+            //    Size = problem.Size,
+            //    MatrixA = matrixA,
+            //    MatrixB = matrixB,
+            //    Hash = problem.Hash,
+            //    Alias = problem.Alias,
+            //    Solutions = solutions,
+            //    BestCost = solutions.Count > 0 ? solutions.Min(solution => solution.Cost) : null
+            //};
+
+            return null;
         }
 
         public static List<SolutionModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Solution> solutions)

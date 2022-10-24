@@ -14,15 +14,15 @@ namespace QAP.DataContext
         public long Id { get; set; } // Id (Primary key)
         public long Cost { get; set; } // Cost
         public byte[] Permutation { get; set; } // Permutation
-        public int ProblemId { get; set; } // ProblemId
+        public int SessionAlgorithmId { get; set; } // SessionAlgorithmId
         public DateTime CreatedAt { get; set; } // CreatedAt
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Problem pointed by [Solution].([ProblemId]) (FK_Solution_Problem)
+        /// Parent SessionAlgorithm pointed by [Solution].([SessionAlgorithmId]) (FK_Solution_SessionAlgorithm)
         /// </summary>
-        public virtual Problem Problem { get; set; } // FK_Solution_Problem
+        public virtual SessionAlgorithm SessionAlgorithm { get; set; } // FK_Solution_SessionAlgorithm
 
         public Solution()
         {

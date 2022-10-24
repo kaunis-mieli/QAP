@@ -11,14 +11,14 @@ BEGIN
 		BEGIN
 			--Create table
 			CREATE TABLE [dbo].[Solution] (
-				[Id]			BIGINT			NOT NULL	IDENTITY,
-				[Cost]			BIGINT			NOT NULL,
-				[Permutation]	VARBINARY(MAX)		NULL,
-				[ProblemId]		INT				NOT NULL,
-				[CreatedAt]		DATETIME		NOT NULL	DEFAULT GETDATE(),
+				[Id]				BIGINT			NOT NULL	IDENTITY,
+				[Cost]				BIGINT			NOT NULL,
+				[Permutation]		VARBINARY(MAX)		NULL,
+				[SessionAlgorithmId] INT			NOT NULL,
+				[CreatedAt]			DATETIME		NOT NULL	DEFAULT GETDATE(),
 				CONSTRAINT [PK_SolutionId] PRIMARY KEY NONCLUSTERED ([Id]),
-				CONSTRAINT [FK_Solution_Problem] FOREIGN KEY ([ProblemId])
-					REFERENCES [dbo].[Problem] ([Id])
+				CONSTRAINT [FK_Solution_SessionAlgorithm] FOREIGN KEY ([SessionAlgorithmId])
+					REFERENCES [dbo].[SessionAlgorithm] ([Id])
 					ON DELETE CASCADE
 					ON UPDATE CASCADE
 			);

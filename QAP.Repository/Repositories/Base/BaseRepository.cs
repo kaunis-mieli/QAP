@@ -64,7 +64,7 @@ namespace QAP.Repository.Repositories.Base
 
         public virtual void Insert(TEntity entity)
         {
-            var bbz = dbSet.Add(entity);
+            dbSet.Add(entity);
         }
 
         public virtual void Delete(object id)

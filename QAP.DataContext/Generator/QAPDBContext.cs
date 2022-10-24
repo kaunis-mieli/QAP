@@ -29,7 +29,10 @@ namespace QAP.DataContext
         {
         }
 
+        public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
         public DbSet<Problem> Problems { get; set; } // Problem
+        public DbSet<Session> Sessions { get; set; } // Session
+        public DbSet<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm
         public DbSet<Solution> Solutions { get; set; } // Solution
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -53,7 +56,10 @@ namespace QAP.DataContext
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new const_AlgorithmConfiguration());
             modelBuilder.ApplyConfiguration(new ProblemConfiguration());
+            modelBuilder.ApplyConfiguration(new SessionConfiguration());
+            modelBuilder.ApplyConfiguration(new SessionAlgorithmConfiguration());
             modelBuilder.ApplyConfiguration(new SolutionConfiguration());
         }
 

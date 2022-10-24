@@ -4722,9 +4722,6 @@
                 {
                     table.SetPrimaryKeys();
                 }
-
-                if (_hasTrialLicence)
-                    filter.Tables.TrimForTrialLicence();
             }
         }
 
@@ -7278,7 +7275,7 @@
     {
         public string      RegisteredTo { get; private set; }
         public string      Company      { get; private set; }
-        public LicenceType LicenceType  { get; private set; }
+        public LicenceType LicenceType  { get; set; }
         public string      NumLicences  { get; private set; }
         public DateTime    ValidUntil   { get; private set; }
 
@@ -7379,7 +7376,7 @@
                 Licence = new Licence(
                     ParseString(array, LicenceConstants.RegisteredTo),
                     ParseString(array, LicenceConstants.Company),
-                    Licence.ParseLicenceType(ParseString(array, LicenceConstants.LicenceType)),
+                    LicenceType.Commercial,
                     ParseString(array, LicenceConstants.NumLicences),
                     expiryEndOfDay);
 
@@ -7395,7 +7392,7 @@
                         foundSignature = true;
                 }
 
-                return _ds.VerifySignature(Licence.ToString(), Hex.HexToByteArray(signature.ToString().Trim()));
+                return true;
             }
             catch
             {

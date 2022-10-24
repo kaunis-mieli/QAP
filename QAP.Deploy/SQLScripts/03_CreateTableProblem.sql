@@ -20,6 +20,8 @@ BEGIN
 				[Alias]			VARCHAR(255)	NOT NULL,
 				[Title]			NTEXT			NULL,
 				[Description]	NTEXT			NULL,
+				[InitialBestKnownCost] BIGINT	NULL,
+				[AllTimeBestKnownCost] BIGINT	NULL,
 				CONSTRAINT [PK_ProblemId] PRIMARY KEY NONCLUSTERED ([Id]),
 				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash]),
 				CONSTRAINT [UQ_ProblemAlias] UNIQUE ([Alias])

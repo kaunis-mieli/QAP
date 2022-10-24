@@ -20,14 +20,20 @@ namespace QAP.DataContext
 
     public class FakeQAPDBContext : IQAPDBContext
     {
+        public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
         public DbSet<Problem> Problems { get; set; } // Problem
+        public DbSet<Session> Sessions { get; set; } // Session
+        public DbSet<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm
         public DbSet<Solution> Solutions { get; set; } // Solution
 
         public FakeQAPDBContext()
         {
             _database = new FakeDatabaseFacade(new QAPDBContext());
 
+            const_Algorithms = new FakeDbSet<const_Algorithm>("Id");
             Problems = new FakeDbSet<Problem>("Id");
+            Sessions = new FakeDbSet<Session>("Id");
+            SessionAlgorithms = new FakeDbSet<SessionAlgorithm>("Id");
             Solutions = new FakeDbSet<Solution>("Id");
 
         }

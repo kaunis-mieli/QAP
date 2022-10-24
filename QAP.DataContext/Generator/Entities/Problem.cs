@@ -8,10 +8,6 @@ using System.Threading.Tasks;
 
 namespace QAP.DataContext
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
     // Problem
     public class Problem
     {
@@ -24,18 +20,20 @@ namespace QAP.DataContext
         public string Alias { get; set; } // Alias (length: 255)
         public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
+        public long? InitialBestKnownCost { get; set; } // InitialBestKnownCost
+        public long? AllTimeBestKnownCost { get; set; } // AllTimeBestKnownCost
 
         // Reverse navigation
 
         /// <summary>
-        /// Child Solutions where [Solution].[ProblemId] point to this entity (FK_Solution_Problem)
+        /// Child Sessions where [Session].[ProblemId] point to this entity (FK_Session_Problem)
         /// </summary>
-        public virtual ICollection<Solution> Solutions { get; set; } // Solution.FK_Solution_Problem
+        public virtual ICollection<Session> Sessions { get; set; } // Session.FK_Session_Problem
 
         public Problem()
         {
             CreatedAt = DateTime.Now;
-            Solutions = new List<Solution>();
+            Sessions = new List<Session>();
         }
     }
 

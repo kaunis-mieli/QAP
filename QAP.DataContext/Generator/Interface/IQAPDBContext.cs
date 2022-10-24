@@ -20,7 +20,10 @@ namespace QAP.DataContext
 
     public interface IQAPDBContext : IDisposable
     {
+        DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
         DbSet<Problem> Problems { get; set; } // Problem
+        DbSet<Session> Sessions { get; set; } // Session
+        DbSet<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm
         DbSet<Solution> Solutions { get; set; } // Solution
 
         int SaveChanges();
