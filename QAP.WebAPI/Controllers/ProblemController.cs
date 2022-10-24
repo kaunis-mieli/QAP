@@ -20,5 +20,18 @@ namespace QAP.WebAPI.Controllers
         {
             return Ok(problemUnitOfWork.GetAliases());
         }
+
+        [HttpGet]
+        [Route("{alias}")]
+        public IActionResult GetProblemByAlias(string alias)
+        {
+            return Ok(problemUnitOfWork.GetProblem(alias));
+        }
+
+        //[HttpGet]
+        //public IActionResult LocalSearch(string problemAlias, int iterations)
+        //{
+        //    return Ok();
+        //}
     }
 }
