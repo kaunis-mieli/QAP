@@ -2,6 +2,7 @@
 using QAP.MvvM.Problem;
 using QAP.MvvM.Solution;
 using QAP.Repository.Repositories.ProblemRepo;
+using QAP.UnitOfWork.UnitOfWork.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,13 @@ using System.Threading.Tasks;
 
 namespace QAP.UnitOfWork.UnitOfWork
 {
-    public class SolutionUnitOfWork
+    public class SolutionUnitOfWork : BaseUnitOfWork
     {
-        private readonly ProblemRepo problemRepo;
         private static Random randomNumberGenerator = new Random();
 
-        public SolutionUnitOfWork(ProblemRepo problemRepo)
-        {
-            this.problemRepo = problemRepo;
-        }
+        public SolutionUnitOfWork(IQAPDBContext context) 
+            : base(context)
+        { }
 
         public SolutionModel CreateRandomSolution(ProblemModel problem)
         {
@@ -42,7 +41,7 @@ namespace QAP.UnitOfWork.UnitOfWork
             {
                 for (int j = 0; j < problem.Size; ++j)
                 {
-                    cost += problem.MatrixA[i + j * problem.Size] * problem.MatrixB[permutation[i] + permutation[j * problem.Size]];
+                    cost += problem.MatrixA[i + j * problem.Size] * problem.MatrixB[permutation[i] + permutation[j] * problem.Size];
                 }
             }
 

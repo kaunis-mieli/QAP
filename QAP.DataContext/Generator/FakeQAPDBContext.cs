@@ -20,21 +20,29 @@ namespace QAP.DataContext
 
     public class FakeQAPDBContext : IQAPDBContext
     {
+        public DbSet<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation
+        public DbSet<Configuration> Configurations { get; set; } // Configuration
         public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
-        public DbSet<Problem> Problems { get; set; } // Problem
+        public DbSet<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion
+        public DbSet<Multiverse> Multiverses { get; set; } // Multiverse
+        public DbSet<Permutation> Permutations { get; set; } // Permutation
+        public DbSet<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance
         public DbSet<Session> Sessions { get; set; } // Session
-        public DbSet<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm
-        public DbSet<Solution> Solutions { get; set; } // Solution
+        public DbSet<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation
 
         public FakeQAPDBContext()
         {
             _database = new FakeDatabaseFacade(new QAPDBContext());
 
+            AlgorithmVariations = new FakeDbSet<AlgorithmVariation>("Id");
+            Configurations = new FakeDbSet<Configuration>("Id");
             const_Algorithms = new FakeDbSet<const_Algorithm>("Id");
-            Problems = new FakeDbSet<Problem>("Id");
+            const_AlgorithmVersions = new FakeDbSet<const_AlgorithmVersion>("Id");
+            Multiverses = new FakeDbSet<Multiverse>("Id");
+            Permutations = new FakeDbSet<Permutation>("Id");
+            ProblemInstances = new FakeDbSet<ProblemInstance>("Id");
             Sessions = new FakeDbSet<Session>("Id");
-            SessionAlgorithms = new FakeDbSet<SessionAlgorithm>("Id");
-            Solutions = new FakeDbSet<Solution>("Id");
+            SessionAlgorithmVariations = new FakeDbSet<SessionAlgorithmVariation>("Id");
 
         }
 

@@ -6,10 +6,6 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace QAP.DataContext
 {
-    // ****************************************************************************************************
-    // This is not a commercial licence, therefore only a few tables/views/stored procedures are generated.
-    // ****************************************************************************************************
-
     // Algorithm
     public class const_AlgorithmConfiguration : IEntityTypeConfiguration<const_Algorithm>
     {
@@ -18,7 +14,7 @@ namespace QAP.DataContext
             builder.ToTable("Algorithm", "const");
             builder.HasKey(x => x.Id).HasName("PK_AlgorithmId");
 
-            builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("smallint").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
+            builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Alias).HasColumnName(@"Alias").HasColumnType("varchar(255)").IsRequired().IsUnicode(false).HasMaxLength(255);
             builder.Property(x => x.Title).HasColumnName(@"Title").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);

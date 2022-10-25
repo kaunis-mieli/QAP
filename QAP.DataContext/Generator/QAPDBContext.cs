@@ -29,11 +29,15 @@ namespace QAP.DataContext
         {
         }
 
+        public DbSet<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation
+        public DbSet<Configuration> Configurations { get; set; } // Configuration
         public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
-        public DbSet<Problem> Problems { get; set; } // Problem
+        public DbSet<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion
+        public DbSet<Multiverse> Multiverses { get; set; } // Multiverse
+        public DbSet<Permutation> Permutations { get; set; } // Permutation
+        public DbSet<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance
         public DbSet<Session> Sessions { get; set; } // Session
-        public DbSet<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm
-        public DbSet<Solution> Solutions { get; set; } // Solution
+        public DbSet<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -56,11 +60,15 @@ namespace QAP.DataContext
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.ApplyConfiguration(new AlgorithmVariationConfiguration());
+            modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
             modelBuilder.ApplyConfiguration(new const_AlgorithmConfiguration());
-            modelBuilder.ApplyConfiguration(new ProblemConfiguration());
+            modelBuilder.ApplyConfiguration(new const_AlgorithmVersionConfiguration());
+            modelBuilder.ApplyConfiguration(new MultiverseConfiguration());
+            modelBuilder.ApplyConfiguration(new PermutationConfiguration());
+            modelBuilder.ApplyConfiguration(new ProblemInstanceConfiguration());
             modelBuilder.ApplyConfiguration(new SessionConfiguration());
-            modelBuilder.ApplyConfiguration(new SessionAlgorithmConfiguration());
-            modelBuilder.ApplyConfiguration(new SolutionConfiguration());
+            modelBuilder.ApplyConfiguration(new SessionAlgorithmVariationConfiguration());
         }
 
     }

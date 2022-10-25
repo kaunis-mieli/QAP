@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace QAP.DataContext
 {
-    // Problem
-    public class ProblemConfiguration : IEntityTypeConfiguration<Problem>
+    // ProblemInstance
+    public class ProblemInstanceConfiguration : IEntityTypeConfiguration<ProblemInstance>
     {
-        public void Configure(EntityTypeBuilder<Problem> builder)
+        public void Configure(EntityTypeBuilder<ProblemInstance> builder)
         {
-            builder.ToTable("Problem", "dbo");
-            builder.HasKey(x => x.Id).HasName("PK_ProblemId");
+            builder.ToTable("ProblemInstance", "dbo");
+            builder.HasKey(x => x.Id).HasName("PK_ProblemInstanceId");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Size).HasColumnName(@"Size").HasColumnType("int").IsRequired();
@@ -24,10 +24,13 @@ namespace QAP.DataContext
             builder.Property(x => x.Title).HasColumnName(@"Title").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.InitialBestKnownCost).HasColumnName(@"InitialBestKnownCost").HasColumnType("bigint").IsRequired(false);
-            builder.Property(x => x.AllTimeBestKnownCost).HasColumnName(@"AllTimeBestKnownCost").HasColumnType("bigint").IsRequired(false);
+            builder.Property(x => x.PermutationId).HasColumnName(@"PermutationId").HasColumnType("bigint").IsRequired(false);
 
-            builder.HasIndex(x => x.Alias).HasDatabaseName("UQ_ProblemAlias").IsUnique();
-            builder.HasIndex(x => x.Hash).HasDatabaseName("UQ_ProblemHash").IsUnique();
+            // Foreign keys
+            builder.HasOne(a => a.Permutation).WithMany(b => b.ProblemInstances).HasForeignKey(c => c.PermutationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProblemInstance_Permutation");
+
+            builder.HasIndex(x => x.Alias).HasDatabaseName("UQ_ProblemInstanceAlias").IsUnique();
+            builder.HasIndex(x => x.Hash).HasDatabaseName("UQ_ProblemInstanceHash").IsUnique();
         }
     }
 

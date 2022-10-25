@@ -8,24 +8,26 @@ using System.Threading.Tasks;
 
 namespace QAP.DataContext
 {
-    // Algorithm
-    public class const_Algorithm
+    // Multiverse
+    public class Multiverse
     {
         public int Id { get; set; } // Id (Primary key)
-        public string Alias { get; set; } // Alias (length: 255)
+        public string Alias { get; set; } // Alias (length: 1)
         public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
+        public DateTime CreatedAt { get; set; } // CreatedAt
 
         // Reverse navigation
 
         /// <summary>
-        /// Child const_AlgorithmVersions where [AlgorithmVersion].[AlgorithmId] point to this entity (FK_AlgorithmVersion_Algorithm)
+        /// Child Sessions where [Session].[MultiverseId] point to this entity (FK_Session_Multiverse)
         /// </summary>
-        public virtual ICollection<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion.FK_AlgorithmVersion_Algorithm
+        public virtual ICollection<Session> Sessions { get; set; } // Session.FK_Session_Multiverse
 
-        public const_Algorithm()
+        public Multiverse()
         {
-            const_AlgorithmVersions = new List<const_AlgorithmVersion>();
+            CreatedAt = DateTime.Now;
+            Sessions = new List<Session>();
         }
     }
 

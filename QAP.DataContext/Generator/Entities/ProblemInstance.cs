@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace QAP.DataContext
 {
-    // Problem
-    public class Problem
+    // ProblemInstance
+    public class ProblemInstance
     {
         public int Id { get; set; } // Id (Primary key)
         public int Size { get; set; } // Size
@@ -21,16 +21,23 @@ namespace QAP.DataContext
         public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
         public long? InitialBestKnownCost { get; set; } // InitialBestKnownCost
-        public long? AllTimeBestKnownCost { get; set; } // AllTimeBestKnownCost
+        public long? PermutationId { get; set; } // PermutationId
 
         // Reverse navigation
 
         /// <summary>
-        /// Child Sessions where [Session].[ProblemId] point to this entity (FK_Session_Problem)
+        /// Child Sessions where [Session].[ProblemInstanceId] point to this entity (FK_Session_ProblemInstance)
         /// </summary>
-        public virtual ICollection<Session> Sessions { get; set; } // Session.FK_Session_Problem
+        public virtual ICollection<Session> Sessions { get; set; } // Session.FK_Session_ProblemInstance
 
-        public Problem()
+        // Foreign keys
+
+        /// <summary>
+        /// Parent Permutation pointed by [ProblemInstance].([PermutationId]) (FK_ProblemInstance_Permutation)
+        /// </summary>
+        public virtual Permutation Permutation { get; set; } // FK_ProblemInstance_Permutation
+
+        public ProblemInstance()
         {
             CreatedAt = DateTime.Now;
             Sessions = new List<Session>();

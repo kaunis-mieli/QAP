@@ -15,11 +15,12 @@ namespace QAP.DataContext
             builder.HasKey(x => x.Id).HasName("PK_SessionId");
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
-            builder.Property(x => x.ProblemId).HasColumnName(@"ProblemId").HasColumnType("int").IsRequired();
-            builder.Property(x => x.CreatedAt).HasColumnName(@"CreatedAt").HasColumnType("datetime").IsRequired();
+            builder.Property(x => x.MultiverseId).HasColumnName(@"MultiverseId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.ProblemInstanceId).HasColumnName(@"ProblemInstanceId").HasColumnType("int").IsRequired();
 
             // Foreign keys
-            builder.HasOne(a => a.Problem).WithMany(b => b.Sessions).HasForeignKey(c => c.ProblemId).HasConstraintName("FK_Session_Problem");
+            builder.HasOne(a => a.Multiverse).WithMany(b => b.Sessions).HasForeignKey(c => c.MultiverseId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Session_Multiverse");
+            builder.HasOne(a => a.ProblemInstance).WithMany(b => b.Sessions).HasForeignKey(c => c.ProblemInstanceId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_Session_ProblemInstance");
         }
     }
 

@@ -12,27 +12,31 @@ namespace QAP.DataContext
     public class Session
     {
         public int Id { get; set; } // Id (Primary key)
-        public int ProblemId { get; set; } // ProblemId
-        public DateTime CreatedAt { get; set; } // CreatedAt
+        public int MultiverseId { get; set; } // MultiverseId
+        public int ProblemInstanceId { get; set; } // ProblemInstanceId
 
         // Reverse navigation
 
         /// <summary>
-        /// Child SessionAlgorithms where [SessionAlgorithm].[SessionId] point to this entity (FK_SessionAlgorithm_Session)
+        /// Child SessionAlgorithmVariations where [SessionAlgorithmVariation].[SessionId] point to this entity (FK_SessionAlgorithmVariation_Session)
         /// </summary>
-        public virtual ICollection<SessionAlgorithm> SessionAlgorithms { get; set; } // SessionAlgorithm.FK_SessionAlgorithm_Session
+        public virtual ICollection<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation.FK_SessionAlgorithmVariation_Session
 
         // Foreign keys
 
         /// <summary>
-        /// Parent Problem pointed by [Session].([ProblemId]) (FK_Session_Problem)
+        /// Parent Multiverse pointed by [Session].([MultiverseId]) (FK_Session_Multiverse)
         /// </summary>
-        public virtual Problem Problem { get; set; } // FK_Session_Problem
+        public virtual Multiverse Multiverse { get; set; } // FK_Session_Multiverse
+
+        /// <summary>
+        /// Parent ProblemInstance pointed by [Session].([ProblemInstanceId]) (FK_Session_ProblemInstance)
+        /// </summary>
+        public virtual ProblemInstance ProblemInstance { get; set; } // FK_Session_ProblemInstance
 
         public Session()
         {
-            CreatedAt = DateTime.Now;
-            SessionAlgorithms = new List<SessionAlgorithm>();
+            SessionAlgorithmVariations = new List<SessionAlgorithmVariation>();
         }
     }
 

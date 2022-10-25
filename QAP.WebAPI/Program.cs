@@ -18,7 +18,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<IQAPDBContext, QAPDBContext>();
-        builder.Services.AddTransient<ProblemRepo>();
+        builder.Services.AddTransient<SolutionUnitOfWork>();
         builder.Services.AddTransient<ProblemUnitOfWork>();
 
         var app = builder.Build();

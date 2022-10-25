@@ -28,10 +28,12 @@ namespace QAP.WebAPI.Controllers
             return Ok(problemUnitOfWork.GetProblem(alias));
         }
 
-        //[HttpGet]
-        //public IActionResult LocalSearch(string problemAlias, int iterations)
-        //{
-        //    return Ok();
-        //}
+        [HttpPost]
+        public IActionResult LocalSearch(string problemAlias, int iterations)
+        {
+            return Ok(problemUnitOfWork.LocalSearch(problemAlias, iterations));
+        }
+
+
     }
 }

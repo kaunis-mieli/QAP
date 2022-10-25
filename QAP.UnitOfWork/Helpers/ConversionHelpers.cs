@@ -11,49 +11,42 @@ namespace QAP.UnitOfWork.Helpers
 {
     public static class ConversionHelpers
     {
-        public static List<ProblemModel> GetProblemModels(List<Problem> problems)
+        public static List<ProblemModel> GetProblemModels(List<ProblemInstance> problems)
         {
             return problems
                 .Select(problem => GetProblemModel(problem))
                 .ToList();
         }
 
-        public static ProblemModel GetProblemModel(Problem problem)
+        public static ProblemModel GetProblemModel(ProblemInstance problem)
         {
             var totalElements = problem.Size * problem.Size;
             var matrixA = BinaryHelpers.ToOrigin<int[]>(problem.MatrixA);
             var matrixB = BinaryHelpers.ToOrigin<int[]>(problem.MatrixB);
-            //var solutions = GetSolutionModels(problem.Size, problem.Solutions);
 
-            //if (matrixA.Length != matrixB.Length || matrixA.Length != totalElements || matrixB.Length != totalElements)
-            //{
-            //    throw new ArgumentException($"Problem #{problem.Id} has wrong sized matrices. |MatrixA| = {matrixA.Length}, |MatrixB| = {matrixB.Length}, Should be {totalElements}");
-            //}
+            if (matrixA.Length != matrixB.Length || matrixA.Length != totalElements || matrixB.Length != totalElements)
+            {
+                throw new ArgumentException($"Problem #{problem.Id} has wrong sized matrices. |MatrixA| = {matrixA.Length}, |MatrixB| = {matrixB.Length}, Should be {totalElements}");
+            }
 
-            //return new ProblemModel()
-            //{
-            //    Size = problem.Size,
-            //    MatrixA = matrixA,
-            //    MatrixB = matrixB,
-            //    Hash = problem.Hash,
-            //    Alias = problem.Alias,
-            //    Solutions = solutions,
-            //    BestCost = solutions.Count > 0 ? solutions.Min(solution => solution.Cost) : null
-            //};
-
-            return null;
+            return new ProblemModel()
+            {
+                Size = problem.Size,
+                MatrixA = matrixA,
+                MatrixB = matrixB,
+            };
         }
 
-        public static List<SolutionModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Solution> solutions)
+        public static List<SolutionModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Permutation> solutions)
         {
             return solutions
                 .Select(solution => GetSolutionModel(permutationSizeShouldBe, solution))
                 .ToList();
         }
 
-        public static SolutionModel GetSolutionModel(int permutationSizeShouldBe, Solution solution)
+        public static SolutionModel GetSolutionModel(int permutationSizeShouldBe, Permutation solution)
         {
-            var permutation = solution.Permutation is not null ? BinaryHelpers.ToOrigin<int[]>(solution.Permutation) : null;
+            var permutation = solution.Value is not null ? BinaryHelpers.ToOrigin<int[]>(solution.Value) : null;
 
             var toReturn = new SolutionModel();
 

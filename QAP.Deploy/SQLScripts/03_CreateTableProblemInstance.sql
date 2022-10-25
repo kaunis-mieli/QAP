@@ -5,12 +5,12 @@ BEGIN
 	BEGIN TRY  
 		BEGIN TRANSACTION
 
-		--Problem table creation
-		PRINT 'Problem'
-		IF NOT EXISTS (SELECT * FROM sysobjects WHERE [Name] = 'Problem' AND xtype='U')
+		--ProblemInstance table creation
+		PRINT 'ProblemInstance'
+		IF NOT EXISTS (SELECT * FROM sysobjects WHERE [Name] = 'ProblemInstance' AND xtype='U')
 		BEGIN
 			--Create table
-			CREATE TABLE [dbo].[Problem] (
+			CREATE TABLE [dbo].[ProblemInstance] (
 				[Id]			INT				NOT NULL	IDENTITY,
 				[Size]			INT				NOT NULL,
 				[MatrixA]		VARBINARY(MAX)	NOT NULL,
@@ -21,17 +21,16 @@ BEGIN
 				[Title]			NTEXT			NULL,
 				[Description]	NTEXT			NULL,
 				[InitialBestKnownCost] BIGINT	NULL,
-				[AllTimeBestKnownCost] BIGINT	NULL,
-				CONSTRAINT [PK_ProblemId] PRIMARY KEY NONCLUSTERED ([Id]),
-				CONSTRAINT [UQ_ProblemHash] UNIQUE ([Hash]),
-				CONSTRAINT [UQ_ProblemAlias] UNIQUE ([Alias])
+				CONSTRAINT [PK_ProblemInstanceId] PRIMARY KEY NONCLUSTERED ([Id]),
+				CONSTRAINT [UQ_ProblemInstanceHash] UNIQUE ([Hash]),
+				CONSTRAINT [UQ_ProblemInstanceAlias] UNIQUE ([Alias])
 			);
 			
-			PRINT '	Table "Problem" has been created'
+			PRINT '	Table "ProblemInstance" has been created'
 		END
 		ELSE
 		BEGIN
-			PRINT '	Table "Problem" already exists'
+			PRINT '	Table "ProblemInstance" already exists'
 		END
 		COMMIT TRANSACTION;
 	END TRY

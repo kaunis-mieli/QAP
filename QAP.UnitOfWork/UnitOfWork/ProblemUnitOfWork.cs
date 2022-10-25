@@ -1,5 +1,6 @@
 ﻿using QAP.DataContext;
 using QAP.MvvM.Problem;
+using QAP.MvvM.Solution;
 using QAP.UnitOfWork.Helpers;
 using QAP.UnitOfWork.UnitOfWork.Base;
 using System;
@@ -13,23 +14,25 @@ namespace QAP.UnitOfWork.UnitOfWork
     public class ProblemUnitOfWork : BaseUnitOfWork
     {
 
+        private SolutionUnitOfWork solutionUnitOfWork;
+        private List<ProblemInstance> existingProblems;
 
-        private List<Problem> existingProblems;
-
-        public ProblemUnitOfWork(IQAPDBContext context)
+        public ProblemUnitOfWork(IQAPDBContext context, SolutionUnitOfWork solutionUnitOfWork)
             : base(context)
-        { }
+        {
+            this.solutionUnitOfWork = solutionUnitOfWork;
+        }
 
         public List<string> GetAliases()
         {
-            return Context.Problems
+            return Context.ProblemInstances
                 .Select(x => x.Alias)
                 .ToList();
         }
 
-        public Problem GetProblem(string alias)
+        public ProblemInstance GetProblem(string alias)
         {
-            return Context.Problems.FirstOrDefault(problem => problem.Alias.ToLower().Equals(alias.ToLower()));
+            return Context.ProblemInstances.FirstOrDefault(problem => problem.Alias.ToLower().Equals(alias.ToLower()));
         }
 
         public void AddProblemWithOnePermutation(string alias, string title, string description, int size, byte[] binaryMatrixA, byte[] binaryMatrixB,
@@ -37,7 +40,7 @@ namespace QAP.UnitOfWork.UnitOfWork
         {
             if (existingProblems is null)
             {
-                existingProblems = Context.Problems.ToList();
+                existingProblems = Context.ProblemInstances.ToList();
             }
 
             var hash = BinaryHelpers.GetHash(Enumerable.Concat(binaryMatrixA, binaryMatrixB));
@@ -45,7 +48,7 @@ namespace QAP.UnitOfWork.UnitOfWork
             if (!existingProblems.Any(pm => Enumerable.SequenceEqual(pm.Hash, hash)) &&
                 !existingProblems.Any(pm => pm.Alias.ToLower().Equals(alias.ToLower())))
             {
-                var problem = new Problem()
+                var problem = new ProblemInstance()
                 {
                     Alias = alias,
                     Title = title,
@@ -59,7 +62,7 @@ namespace QAP.UnitOfWork.UnitOfWork
 
                 existingProblems.Add(problem);
 
-                Context.Problems.Add(problem);
+                Context.ProblemInstances.Add(problem);
             }
             else
             {
@@ -68,26 +71,43 @@ namespace QAP.UnitOfWork.UnitOfWork
         }
 
         // TODO: unfinished
-        public void LocalSearch(string alias, int iterations)
+        public SolutionModel LocalSearch(string alias, int iterations)
         {
-            var problem = Context.Problems.FirstOrDefault(problem => problem.Alias.ToLower().Equals(alias.ToLower()));
+            var problem = Context.ProblemInstances.FirstOrDefault(problem => problem.Alias.ToLower().Equals(alias.ToLower()));
 
-            var session = new Session()
+            if (problem is not null)
             {
-                Problem = problem,
-                SessionAlgorithms =
+                var problemModel = ConversionHelpers.GetProblemModel(problem);
+
+                var initialSolution = solutionUnitOfWork.CreateRandomSolution(problemModel);
+
+                var solutions = new List<Permutation>()
                 {
-                    new SessionAlgorithm()
+                    new Permutation()
                     {
-                         AlgorithmId = (short)AlgorithmType.ClassicLocalSearchAlgorithm,
+                        Cost = initialSolution.Cost,
+                        Value = BinaryHelpers.ToBytes(initialSolution.Permutation)
                     }
-                }
-            };
+                };
 
-            
+                // TODO: perform calculations
 
-            Context.Sessions.Add(session);
-            Save();
+                var session = new Session()
+                {
+                    ProblemInstance = problem
+                };
+
+                Context.Sessions.Add(session);
+                Save();
+
+                //return initialSolutionę;
+            }
+            else
+            {
+                throw new ArgumentException($"Problem by alias = {problem.Alias} was not found!");
+            }
+
+            return null;
         }
     }
 }
