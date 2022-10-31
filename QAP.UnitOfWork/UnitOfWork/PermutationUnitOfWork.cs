@@ -1,8 +1,8 @@
-﻿using QAP.DataContext;
-using QAP.MvvM.Problem;
-using QAP.MvvM.Solution;
+﻿using QAP.Core.Models.Permutation;
+using QAP.Core.Models.Problem;
+using QAP.DataContext;
 using QAP.Repository.Repositories.ProblemRepo;
-using QAP.UnitOfWork.UnitOfWork.Base;
+using QAP.UnitOfWork.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +12,19 @@ using System.Threading.Tasks;
 
 namespace QAP.UnitOfWork.UnitOfWork
 {
-    public class SolutionUnitOfWork : BaseUnitOfWork
+    public class PermutationUnitOfWork : BaseUnitOfWork
     {
         private static Random randomNumberGenerator = new Random();
 
-        public SolutionUnitOfWork(IQAPDBContext context) 
-            : base(context)
-        { }
+        public PermutationUnitOfWork(UoWFactory uoWFactory) : base(uoWFactory) { }
 
-        public SolutionModel CreateRandomSolution(ProblemModel problem)
+        public PermutationModel CreateRandomSolution(ProblemModel problem)
         {
             var permutation = Enumerable.Range(0, problem.Size).ToArray();
 
             Shuffle(permutation);
 
-            return new SolutionModel()
+            return new PermutationModel()
             {
                 Permutation = permutation,
                 Cost = CalculateCost(problem, permutation)

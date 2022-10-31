@@ -1,6 +1,6 @@
-﻿using QAP.DataContext;
-using QAP.MvvM.Problem;
-using QAP.MvvM.Solution;
+﻿using QAP.Core.Models.Permutation;
+using QAP.Core.Models.Problem;
+using QAP.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,18 +37,18 @@ namespace QAP.UnitOfWork.Helpers
             };
         }
 
-        public static List<SolutionModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Permutation> solutions)
+        public static List<PermutationModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Permutation> solutions)
         {
             return solutions
                 .Select(solution => GetSolutionModel(permutationSizeShouldBe, solution))
                 .ToList();
         }
 
-        public static SolutionModel GetSolutionModel(int permutationSizeShouldBe, Permutation solution)
+        public static PermutationModel GetSolutionModel(int permutationSizeShouldBe, Permutation solution)
         {
             var permutation = solution.Value is not null ? BinaryHelpers.ToOrigin<int[]>(solution.Value) : null;
 
-            var toReturn = new SolutionModel();
+            var toReturn = new PermutationModel();
 
             if (permutation is null || permutation.Length == permutationSizeShouldBe)
             {

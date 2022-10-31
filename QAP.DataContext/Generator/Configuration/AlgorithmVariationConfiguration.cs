@@ -21,8 +21,10 @@ namespace QAP.DataContext
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.AlgorithmVersionId).HasColumnName(@"AlgorithmVersionId").HasColumnType("int").IsRequired();
             builder.Property(x => x.ConfigurationId).HasColumnName(@"ConfigurationId").HasColumnType("int").IsRequired(false);
+            builder.Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int").IsRequired(false);
 
             // Foreign keys
+            builder.HasOne(a => a.auth_User).WithMany(b => b.AlgorithmVariations).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AlgorithmVariation_User");
             builder.HasOne(a => a.Configuration).WithMany(b => b.AlgorithmVariations).HasForeignKey(c => c.ConfigurationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AlgorithmVariation_Configuration");
             builder.HasOne(a => a.const_AlgorithmVersion).WithMany(b => b.AlgorithmVariations).HasForeignKey(c => c.AlgorithmVersionId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AlgorithmVariation_AlgorithmVersion");
         }

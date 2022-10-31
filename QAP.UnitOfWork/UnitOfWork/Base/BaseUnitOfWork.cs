@@ -1,24 +1,25 @@
 ﻿using QAP.DataContext;
+using QAP.UnitOfWork.Factories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAP.UnitOfWork.UnitOfWork.Base
+namespace QAP.UnitOfWork.UnitOfWork
 {
     public abstract class BaseUnitOfWork
     {
-        protected IQAPDBContext Context { get; set; }
+        internal UoWFactory parentFactory { get; set; }
 
-        public BaseUnitOfWork(IQAPDBContext context)
+        protected BaseUnitOfWork(UoWFactory _parentFactory)
         {
-            Context = context;
+            parentFactory = _parentFactory;
         }
 
         public void Save()
         {
-            Context.SaveChanges();
+            parentFactory.Context.SaveChanges();
         } 
     }
 }

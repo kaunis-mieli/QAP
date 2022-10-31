@@ -17,7 +17,8 @@ BEGIN
 				[SessionAlgorithmVariationId] INT	NOT NULL,
 				[Iteration]			INT				NOT NULL,
 				[Trial]				TINYINT			NOT NULL,
-				[CreatedAt]			DATETIME		NOT NULL	DEFAULT GETDATE(),
+				[Member]			INT					NULL,
+				[Timestamp]			DATETIME		NOT NULL	DEFAULT GETDATE(),
 				CONSTRAINT [PK_PermutationId]		PRIMARY KEY NONCLUSTERED ([Id]),
 				CONSTRAINT [FK_Permutation_SessionAlgorithmVariation] FOREIGN KEY ([SessionAlgorithmVariationId])
 					REFERENCES [dbo].[SessionAlgorithmVariation] ([Id])

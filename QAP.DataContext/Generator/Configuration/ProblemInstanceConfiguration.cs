@@ -19,14 +19,16 @@ namespace QAP.DataContext
             builder.Property(x => x.MatrixA).HasColumnName(@"MatrixA").HasColumnType("varbinary(max)").IsRequired();
             builder.Property(x => x.MatrixB).HasColumnName(@"MatrixB").HasColumnType("varbinary(max)").IsRequired();
             builder.Property(x => x.Hash).HasColumnName(@"Hash").HasColumnType("binary(32)").IsRequired().HasMaxLength(32);
-            builder.Property(x => x.CreatedAt).HasColumnName(@"CreatedAt").HasColumnType("datetime").IsRequired();
             builder.Property(x => x.Alias).HasColumnName(@"Alias").HasColumnType("varchar(255)").IsRequired().IsUnicode(false).HasMaxLength(255);
             builder.Property(x => x.Title).HasColumnName(@"Title").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.InitialBestKnownCost).HasColumnName(@"InitialBestKnownCost").HasColumnType("bigint").IsRequired(false);
+            builder.Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int").IsRequired(false);
+            builder.Property(x => x.Timestamp).HasColumnName(@"Timestamp").HasColumnType("datetime").IsRequired();
             builder.Property(x => x.PermutationId).HasColumnName(@"PermutationId").HasColumnType("bigint").IsRequired(false);
 
             // Foreign keys
+            builder.HasOne(a => a.auth_User).WithMany(b => b.ProblemInstances).HasForeignKey(c => c.UserId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProblemInstance_User");
             builder.HasOne(a => a.Permutation).WithMany(b => b.ProblemInstances).HasForeignKey(c => c.PermutationId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_ProblemInstance_Permutation");
 
             builder.HasIndex(x => x.Alias).HasDatabaseName("UQ_ProblemInstanceAlias").IsUnique();

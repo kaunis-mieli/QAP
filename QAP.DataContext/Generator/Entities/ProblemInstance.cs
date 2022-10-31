@@ -16,11 +16,12 @@ namespace QAP.DataContext
         public byte[] MatrixA { get; set; } // MatrixA
         public byte[] MatrixB { get; set; } // MatrixB
         public byte[] Hash { get; set; } // Hash (length: 32)
-        public DateTime CreatedAt { get; set; } // CreatedAt
         public string Alias { get; set; } // Alias (length: 255)
         public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
         public long? InitialBestKnownCost { get; set; } // InitialBestKnownCost
+        public int? UserId { get; set; } // UserId
+        public DateTime Timestamp { get; set; } // Timestamp
         public long? PermutationId { get; set; } // PermutationId
 
         // Reverse navigation
@@ -33,13 +34,18 @@ namespace QAP.DataContext
         // Foreign keys
 
         /// <summary>
+        /// Parent auth_User pointed by [ProblemInstance].([UserId]) (FK_ProblemInstance_User)
+        /// </summary>
+        public virtual auth_User auth_User { get; set; } // FK_ProblemInstance_User
+
+        /// <summary>
         /// Parent Permutation pointed by [ProblemInstance].([PermutationId]) (FK_ProblemInstance_Permutation)
         /// </summary>
         public virtual Permutation Permutation { get; set; } // FK_ProblemInstance_Permutation
 
         public ProblemInstance()
         {
-            CreatedAt = DateTime.Now;
+            Timestamp = DateTime.Now;
             Sessions = new List<Session>();
         }
     }

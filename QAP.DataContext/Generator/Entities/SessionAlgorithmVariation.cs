@@ -14,7 +14,9 @@ namespace QAP.DataContext
         public int Id { get; set; } // Id (Primary key)
         public int SessionId { get; set; } // SessionId
         public int AlgorithmVariationId { get; set; } // AlgorithmVariationId
+        public int StateId { get; set; } // StateId
         public int? ConfigurationId { get; set; } // ConfigurationId
+        public long? Seed { get; set; } // Seed
         public long? PermutationId { get; set; } // PermutationId
 
         // Reverse navigation
@@ -35,6 +37,11 @@ namespace QAP.DataContext
         /// Parent Configuration pointed by [SessionAlgorithmVariation].([ConfigurationId]) (FK_SessionAlgorithmVariation_Configuration)
         /// </summary>
         public virtual Configuration Configuration { get; set; } // FK_SessionAlgorithmVariation_Configuration
+
+        /// <summary>
+        /// Parent const_State pointed by [SessionAlgorithmVariation].([StateId]) (FK_SessionAlgorithmVariation_State)
+        /// </summary>
+        public virtual const_State const_State { get; set; } // FK_SessionAlgorithmVariation_State
 
         /// <summary>
         /// Parent Permutation pointed by [SessionAlgorithmVariation].([PermutationId]) (FK_SessionAlgorithmVariation_Permutation)

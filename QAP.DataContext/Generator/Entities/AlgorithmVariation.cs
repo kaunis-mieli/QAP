@@ -18,6 +18,7 @@ namespace QAP.DataContext
         public int Id { get; set; } // Id (Primary key)
         public int AlgorithmVersionId { get; set; } // AlgorithmVersionId
         public int? ConfigurationId { get; set; } // ConfigurationId
+        public int? UserId { get; set; } // UserId
 
         // Reverse navigation
 
@@ -27,6 +28,11 @@ namespace QAP.DataContext
         public virtual ICollection<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation.FK_SessionAlgorithmVariation_AlgorithmVariation
 
         // Foreign keys
+
+        /// <summary>
+        /// Parent auth_User pointed by [AlgorithmVariation].([UserId]) (FK_AlgorithmVariation_User)
+        /// </summary>
+        public virtual auth_User auth_User { get; set; } // FK_AlgorithmVariation_User
 
         /// <summary>
         /// Parent Configuration pointed by [AlgorithmVariation].([ConfigurationId]) (FK_AlgorithmVariation_Configuration)

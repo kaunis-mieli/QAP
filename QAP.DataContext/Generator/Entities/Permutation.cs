@@ -17,7 +17,8 @@ namespace QAP.DataContext
         public int SessionAlgorithmVariationId { get; set; } // SessionAlgorithmVariationId
         public int Iteration { get; set; } // Iteration
         public byte Trial { get; set; } // Trial
-        public DateTime CreatedAt { get; set; } // CreatedAt
+        public int? Member { get; set; } // Member
+        public DateTime Timestamp { get; set; } // Timestamp
 
         // Reverse navigation
 
@@ -40,7 +41,7 @@ namespace QAP.DataContext
 
         public Permutation()
         {
-            CreatedAt = DateTime.Now;
+            Timestamp = DateTime.Now;
             ProblemInstances = new List<ProblemInstance>();
             SessionAlgorithmVariations = new List<SessionAlgorithmVariation>();
         }

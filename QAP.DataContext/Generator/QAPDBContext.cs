@@ -30,9 +30,12 @@ namespace QAP.DataContext
         }
 
         public DbSet<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation
+        public DbSet<auth_User> auth_Users { get; set; } // User
+        public DbSet<auth_UserLogin> auth_UserLogins { get; set; } // UserLogin
         public DbSet<Configuration> Configurations { get; set; } // Configuration
         public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
         public DbSet<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion
+        public DbSet<const_State> const_States { get; set; } // State
         public DbSet<Multiverse> Multiverses { get; set; } // Multiverse
         public DbSet<Permutation> Permutations { get; set; } // Permutation
         public DbSet<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance
@@ -61,9 +64,12 @@ namespace QAP.DataContext
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.ApplyConfiguration(new AlgorithmVariationConfiguration());
+            modelBuilder.ApplyConfiguration(new auth_UserConfiguration());
+            modelBuilder.ApplyConfiguration(new auth_UserLoginConfiguration());
             modelBuilder.ApplyConfiguration(new ConfigurationConfiguration());
             modelBuilder.ApplyConfiguration(new const_AlgorithmConfiguration());
             modelBuilder.ApplyConfiguration(new const_AlgorithmVersionConfiguration());
+            modelBuilder.ApplyConfiguration(new const_StateConfiguration());
             modelBuilder.ApplyConfiguration(new MultiverseConfiguration());
             modelBuilder.ApplyConfiguration(new PermutationConfiguration());
             modelBuilder.ApplyConfiguration(new ProblemInstanceConfiguration());

@@ -1,5 +1,5 @@
 ﻿using QAP.DataContext;
-using QAP.MvvM.Problem;
+using QAP.UnitOfWork.Factories;
 using QAP.UnitOfWork.Helpers;
 using QAP.UnitOfWork.UnitOfWork;
 using System.Text.RegularExpressions;
@@ -8,11 +8,11 @@ namespace QAP.Importer;
 
 internal class Importer
 {
-    private readonly ProblemUnitOfWork problemUnitOfWork;
+    private readonly UoWFactory uoWFactory;
 
-    public Importer(ProblemUnitOfWork problemUnitOfWork)
+    public Importer(UoWFactory _uoWFactory)
     {
-        this.problemUnitOfWork = problemUnitOfWork;
+        uoWFactory = _uoWFactory;
     }
 
     public void Import(string directory)
@@ -22,7 +22,7 @@ internal class Importer
             ProcessFile(file);
         }
 
-        problemUnitOfWork.Save();
+        uoWFactory.ProblemInstanceUnitOfWork.Save();
     }
 
     private void ProcessFile(string file)
@@ -37,8 +37,8 @@ internal class Importer
 
             var shortName = Path.GetFileNameWithoutExtension(file);
 
-            problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null,
-                parsedLines[0][0], binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
+            //problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null,
+            //    parsedLines[0][0], binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
 
             Console.Write(".");
         }

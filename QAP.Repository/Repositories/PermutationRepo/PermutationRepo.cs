@@ -7,12 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAP.Repository.Repositories.SolutionRepo
+namespace QAP.Repository.Repositories.SolutionRepo;
+
+public class PermutationRepo : BaseRepository<Permutation>
 {
-    public class SolutionRepo : BaseRepository<Problem>
-    {
-        public SolutionRepo(IQAPDBContext context) : base(context) { }
-
-
-    }
+    public PermutationRepo(IQAPDBContext context) : base(context) { }
 }

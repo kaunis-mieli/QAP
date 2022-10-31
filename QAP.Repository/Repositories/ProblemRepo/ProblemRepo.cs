@@ -9,27 +9,8 @@ using System.Threading.Tasks;
 
 namespace QAP.Repository.Repositories.ProblemRepo
 {
-    public class ProblemRepo : BaseRepository<Problem>
+    public class ProblemInstanceRepo : BaseRepository<ProblemInstance>
     {
-        public ProblemRepo(IQAPDBContext context) : base(context) { }
-
-        public List<Problem> GetAllShallow()
-        {
-            return context.Problems.ToList();
-        }
-
-        public Problem GetProblemByAliasShallow(string alias)
-        {
-            return context.Problems
-                .Where(problem => problem.Alias.ToLower().Equals(alias.ToLower()))
-                .First();
-        }
-
-        public List<string> GetAliases()
-        {
-            return context.Problems
-                .Select(x => x.Alias)
-                .ToList();
-        } 
+        public ProblemInstanceRepo(IQAPDBContext context) : base(context) { }
     }
 }

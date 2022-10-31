@@ -22,7 +22,7 @@ namespace QAP.DataContext
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);
 
             // Foreign keys
-            builder.HasOne(a => a.const_Algorithm).WithMany(b => b.const_AlgorithmVersions).HasForeignKey(c => c.AlgorithmId).HasConstraintName("FK_AlgorithmVersion_Algorithm");
+            builder.HasOne(a => a.const_Algorithm).WithMany(b => b.const_AlgorithmVersions).HasForeignKey(c => c.AlgorithmId).OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AlgorithmVersion_Algorithm");
 
             builder.HasIndex(x => new { x.AlgorithmId, x.Version }).HasDatabaseName("UQ_AlgorithmVersionAlgorithmIdAndVersion").IsUnique();
             builder.HasIndex(x => new { x.Alias, x.AlgorithmId }).HasDatabaseName("UQ_AlgorithmVersionAliasAndAlgorithmId").IsUnique();

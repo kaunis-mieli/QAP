@@ -1,5 +1,6 @@
 using QAP.DataContext;
 using QAP.Repository.Repositories.ProblemRepo;
+using QAP.UnitOfWork.Factories;
 using QAP.UnitOfWork.UnitOfWork;
 
 namespace QAP.WebAPI;
@@ -18,8 +19,7 @@ public class Program
         builder.Services.AddSwaggerGen();
 
         builder.Services.AddDbContext<IQAPDBContext, QAPDBContext>();
-        builder.Services.AddTransient<SolutionUnitOfWork>();
-        builder.Services.AddTransient<ProblemUnitOfWork>();
+        builder.Services.AddScoped<UoWFactory>();
 
         var app = builder.Build();
 

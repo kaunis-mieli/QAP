@@ -1,0 +1,22 @@
+﻿USE [QAP]
+GO
+
+BEGIN
+	BEGIN TRY  
+		BEGIN TRANSACTION
+		IF (NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'auth'))
+		BEGIN
+			EXEC ('CREATE SCHEMA [auth] AUTHORIZATION [dbo]')
+			COMMIT TRANSACTION;
+			PRINT 'Schema "auth" has been created'
+		END
+		ELSE
+		BEGIN
+			PRINT 'Schema "auth" already exists'
+		END
+	END TRY
+	BEGIN CATCH
+		ROLLBACK TRANSACTION;
+		PRINT ERROR_MESSAGE()
+	END CATCH
+END;

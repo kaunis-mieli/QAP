@@ -16,14 +16,17 @@ BEGIN
 				[MatrixA]		VARBINARY(MAX)	NOT NULL,
 				[MatrixB]		VARBINARY(MAX)	NOT NULl,
 				[Hash]			BINARY(32)		NOT NULL,
-				[CreatedAt]		DATETIME		NOT NULL DEFAULT GETDATE(),
 				[Alias]			VARCHAR(255)	NOT NULL,
 				[Title]			NTEXT			NULL,
 				[Description]	NTEXT			NULL,
 				[InitialBestKnownCost] BIGINT	NULL,
+				[UserId]		INT				NULL,
+				[Timestamp]		DATETIME		NOT NULL DEFAULT GETDATE(),
 				CONSTRAINT [PK_ProblemInstanceId] PRIMARY KEY NONCLUSTERED ([Id]),
 				CONSTRAINT [UQ_ProblemInstanceHash] UNIQUE ([Hash]),
-				CONSTRAINT [UQ_ProblemInstanceAlias] UNIQUE ([Alias])
+				CONSTRAINT [UQ_ProblemInstanceAlias] UNIQUE ([Alias]),
+				CONSTRAINT [FK_ProblemInstance_User] FOREIGN KEY ([UserId])
+					REFERENCES [auth].[User] ([Id])
 			);
 			
 			PRINT '	Table "ProblemInstance" has been created'
