@@ -1,6 +1,4 @@
-﻿using TypeGen.Core.TypeAnnotations;
-
-namespace QAP.Core.Models.Permutation;
+﻿namespace QAP.Core.Models.Permutation;
 
 public class PermutationModel
 {
