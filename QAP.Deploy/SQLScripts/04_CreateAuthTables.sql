@@ -13,9 +13,9 @@ BEGIN
 			CREATE TABLE [auth].[User] (
 				[Id]			INT				NOT NULL	IDENTITY,
 				[Alias]			VARCHAR(255)	NOT NULL,
-				[FullName]		NVARCHAR(255)	NOT NULL,
+				[HashedPassword] TEXT				NULL,
 				[Email]			VARCHAR(255)	NOT NULL,
-				[Hash]			TEXT			NOT	NULL,
+				[FullName]		NVARCHAR(255)		NULL,
 				[Timestamp]		DATETIME		NOT NULL DEFAULT GETDATE(),
 				CONSTRAINT [PK_UserId] PRIMARY KEY NONCLUSTERED ([Id]),
 				CONSTRAINT [UQ_UserAlias] UNIQUE ([Alias]),

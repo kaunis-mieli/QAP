@@ -13,9 +13,9 @@ namespace QAP.DataContext
     {
         public int Id { get; set; } // Id (Primary key)
         public string Alias { get; set; } // Alias (length: 255)
-        public string FullName { get; set; } // FullName (length: 255)
+        public string HashedPassword { get; set; } // HashedPassword (length: 2147483647)
         public string Email { get; set; } // Email (length: 255)
-        public string Hash { get; set; } // Hash (length: 2147483647)
+        public string FullName { get; set; } // FullName (length: 255)
         public DateTime Timestamp { get; set; } // Timestamp
 
         // Reverse navigation

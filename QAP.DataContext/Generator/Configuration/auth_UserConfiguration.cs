@@ -16,9 +16,9 @@ namespace QAP.DataContext
 
             builder.Property(x => x.Id).HasColumnName(@"Id").HasColumnType("int").IsRequired().ValueGeneratedOnAdd().UseIdentityColumn();
             builder.Property(x => x.Alias).HasColumnName(@"Alias").HasColumnType("varchar(255)").IsRequired().IsUnicode(false).HasMaxLength(255);
-            builder.Property(x => x.FullName).HasColumnName(@"FullName").HasColumnType("nvarchar(255)").IsRequired().HasMaxLength(255);
+            builder.Property(x => x.HashedPassword).HasColumnName(@"HashedPassword").HasColumnType("text(2147483647)").IsRequired(false).IsUnicode(false).HasMaxLength(2147483647);
             builder.Property(x => x.Email).HasColumnName(@"Email").HasColumnType("varchar(255)").IsRequired().IsUnicode(false).HasMaxLength(255);
-            builder.Property(x => x.Hash).HasColumnName(@"Hash").HasColumnType("text(2147483647)").IsRequired().IsUnicode(false).HasMaxLength(2147483647);
+            builder.Property(x => x.FullName).HasColumnName(@"FullName").HasColumnType("nvarchar(255)").IsRequired(false).HasMaxLength(255);
             builder.Property(x => x.Timestamp).HasColumnName(@"Timestamp").HasColumnType("datetime").IsRequired();
 
             builder.HasIndex(x => x.Alias).HasDatabaseName("UQ_UserAlias").IsUnique();
