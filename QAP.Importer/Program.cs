@@ -11,12 +11,7 @@ internal class Program
     {
         try
         {
-            var context = new QAPDBContext();
-            var uowFactory = new UoWFactory(context);
-
-            var importer = new Importer(uowFactory);
-            importer.Import("Data");
-            
+            new Importer(new UoWFactory(new QAPDBContext())).Import("Data");
         }
         catch (Exception ex)
         {

@@ -14,36 +14,35 @@ namespace QAP.DataContext
         public long Id { get; set; } // Id (Primary key)
         public long Cost { get; set; } // Cost
         public byte[] Value { get; set; } // Value
-        public int SessionAlgorithmVariationId { get; set; } // SessionAlgorithmVariationId
+        public int SessionAlgorithmVersionId { get; set; } // SessionAlgorithmVersionId
         public int Iteration { get; set; } // Iteration
-        public byte Trial { get; set; } // Trial
         public int? Member { get; set; } // Member
         public DateTime Timestamp { get; set; } // Timestamp
 
         // Reverse navigation
 
         /// <summary>
-        /// Child ProblemInstances where [ProblemInstance].[PermutationId] point to this entity (FK_ProblemInstance_Permutation)
+        /// Child Problems where [Problem].[PermutationId] point to this entity (FK_Problem_Permutation)
         /// </summary>
-        public virtual ICollection<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance.FK_ProblemInstance_Permutation
+        public virtual ICollection<Problem> Problems { get; set; } // Problem.FK_Problem_Permutation
 
         /// <summary>
-        /// Child SessionAlgorithmVariations where [SessionAlgorithmVariation].[PermutationId] point to this entity (FK_SessionAlgorithmVariation_Permutation)
+        /// Child SessionAlgorithmVersions where [SessionAlgorithmVersion].[PermutationId] point to this entity (FK_SessionAlgorithmVersion_Permutation)
         /// </summary>
-        public virtual ICollection<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation.FK_SessionAlgorithmVariation_Permutation
+        public virtual ICollection<SessionAlgorithmVersion> SessionAlgorithmVersions { get; set; } // SessionAlgorithmVersion.FK_SessionAlgorithmVersion_Permutation
 
         // Foreign keys
 
         /// <summary>
-        /// Parent SessionAlgorithmVariation pointed by [Permutation].([SessionAlgorithmVariationId]) (FK_Permutation_SessionAlgorithmVariation)
+        /// Parent SessionAlgorithmVersion pointed by [Permutation].([SessionAlgorithmVersionId]) (FK_Permutation_SessionAlgorithmVersion)
         /// </summary>
-        public virtual SessionAlgorithmVariation SessionAlgorithmVariation { get; set; } // FK_Permutation_SessionAlgorithmVariation
+        public virtual SessionAlgorithmVersion SessionAlgorithmVersion { get; set; } // FK_Permutation_SessionAlgorithmVersion
 
         public Permutation()
         {
             Timestamp = DateTime.Now;
-            ProblemInstances = new List<ProblemInstance>();
-            SessionAlgorithmVariations = new List<SessionAlgorithmVariation>();
+            Problems = new List<Problem>();
+            SessionAlgorithmVersions = new List<SessionAlgorithmVersion>();
         }
     }
 

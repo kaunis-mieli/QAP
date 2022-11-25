@@ -1,4 +1,5 @@
-﻿using QAP.DataContext;
+﻿using MessagePack;
+using QAP.DataContext;
 using QAP.UnitOfWork.Factories;
 using QAP.UnitOfWork.Helpers;
 using QAP.UnitOfWork.UnitOfWork;
@@ -22,7 +23,7 @@ internal class Importer
             ProcessFile(file);
         }
 
-        uoWFactory.ProblemInstanceUnitOfWork.Save();
+        uoWFactory.ProblemUnitOfWork.Save();
     }
 
     private void ProcessFile(string file)
@@ -37,10 +38,10 @@ internal class Importer
 
             var shortName = Path.GetFileNameWithoutExtension(file);
 
-            //problemUnitOfWork.AddProblemWithOnePermutation(shortName.ToLower(), $"{shortName.ToUpper()}: N = {parsedLines[0][0]}", null,
-            //    parsedLines[0][0], binaryMatrixA, binaryMatrixB, parsedLines[0][1], null);
+            uoWFactory.ProblemUnitOfWork.InsertProblem(shortName.ToLower(), $"{shortName.ToLower()}: N = {parsedLines[0][0]}", null,
+                parsedLines[0][0], binaryMatrixA, binaryMatrixB, parsedLines[0][1]);
 
-            Console.Write(".");
+            Console.Write("#");
         }
         catch (Exception ex)
         {
@@ -50,20 +51,22 @@ internal class Importer
 
     private static void SerializeMatrices(List<int[]> parsedLines, out byte[] serializedMatrixA, out byte[] serializedMatrixB)
     {
+        var dimension = parsedLines[0][0];
+
         var matrixA = parsedLines
             .Skip(1)
-            .Take(parsedLines[0][0])
+            .Take(dimension)
             .SelectMany(x => x)
             .ToArray();
 
         var matrixB = parsedLines
-            .Skip(1 + parsedLines[0][0])
-            .Take(parsedLines[0][0])
+            .Skip(1 + dimension)
+            .Take(dimension)
             .SelectMany(x => x)
             .ToArray();
 
-        serializedMatrixA = BinaryHelpers.ToBytes(matrixA);
-        serializedMatrixB = BinaryHelpers.ToBytes(matrixB);
+        serializedMatrixA = MessagePackSerializer.Serialize(matrixA);
+        serializedMatrixB = MessagePackSerializer.Serialize(matrixB);
     }
 
     private static List<int[]> ParseLines(string file)

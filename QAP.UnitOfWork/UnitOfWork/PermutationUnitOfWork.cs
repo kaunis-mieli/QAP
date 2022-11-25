@@ -10,52 +10,50 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAP.UnitOfWork.UnitOfWork
+namespace QAP.UnitOfWork.UnitOfWork;
+
+public class PermutationUnitOfWork : BaseUnitOfWork
 {
-    public class PermutationUnitOfWork : BaseUnitOfWork
+    private static Random randomNumberGenerator = new Random();
+
+    public PermutationUnitOfWork(UoWFactory uoWFactory) : base(uoWFactory) { }
+
+    public PermutationModel CreateRandomPermutation(ProblemModel problemInstanceModel)
     {
-        private static Random randomNumberGenerator = new Random();
+        var permutation = Enumerable.Range(0, problemInstanceModel.Size).ToArray();
 
-        public PermutationUnitOfWork(UoWFactory uoWFactory) : base(uoWFactory) { }
+        Shuffle(permutation);
 
-        public PermutationModel CreateRandomSolution(ProblemModel problem)
+        return new PermutationModel()
         {
-            var permutation = Enumerable.Range(0, problem.Size).ToArray();
-
-            Shuffle(permutation);
-
-            return new PermutationModel()
-            {
-                Permutation = permutation,
-                Cost = CalculateCost(problem, permutation)
-            };
-        }
-
-        private static long CalculateCost(ProblemModel problem, int[] permutation)
-        {
-            var cost = 0l;
-
-            for (int i = 0; i < problem.Size; ++i)
-            {
-                for (int j = 0; j < problem.Size; ++j)
-                {
-                    cost += problem.MatrixA[i + j * problem.Size] * problem.MatrixB[permutation[i] + permutation[j] * problem.Size];
-                }
-            }
-
-            return cost;
-        }
-
-        private static void Shuffle<T>(T[] values)
-        {
-            for (int i = values.Length - 1; i > 0; i--)
-            {
-                int k = randomNumberGenerator.Next(i + 1);
-                T value = values[k];
-                values[k] = values[i];
-                values[i] = value;
-            }
-        }
+            Value = permutation,
+            Cost = CalculateCost(problemInstanceModel, permutation)
+        };
     }
 
+    public static long CalculateCost(ProblemModel problemModel, int[] permutation)
+    {
+        var cost = 0L;
+
+        for (int i = 0; i < problemModel.Size; ++i)
+        {
+            for (int j = 0; j < problemModel.Size; ++j)
+            {
+                cost += problemModel.MatrixA[i, j] * problemModel.MatrixB[permutation[i], permutation[j]];
+            }
+        }
+
+        return cost;
+    }
+
+    private static void Shuffle<T>(T[] values)
+    {
+        for (int i = values.Length - 1; i > 0; i--)
+        {
+            int k = randomNumberGenerator.Next(i + 1);
+            T value = values[k];
+            values[k] = values[i];
+            values[i] = value;
+        }
+    }
 }

@@ -15,7 +15,7 @@ namespace QAP.DataContext
         public string Alias { get; set; } // Alias (length: 255)
         public string Title { get; set; } // Title (length: 1073741823)
         public string Description { get; set; } // Description (length: 1073741823)
-        public int UserId { get; set; } // UserId
+        public int? UserId { get; set; } // UserId
         public DateTime Timestamp { get; set; } // Timestamp
 
         // Reverse navigation

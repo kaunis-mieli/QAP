@@ -18,7 +18,7 @@ namespace QAP.DataContext
             builder.Property(x => x.Alias).HasColumnName(@"Alias").HasColumnType("varchar(255)").IsRequired(false).IsUnicode(false).HasMaxLength(255);
             builder.Property(x => x.Title).HasColumnName(@"Title").HasColumnType("ntext").IsRequired(false);
             builder.Property(x => x.Description).HasColumnName(@"Description").HasColumnType("ntext").IsRequired(false);
-            builder.Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int").IsRequired();
+            builder.Property(x => x.UserId).HasColumnName(@"UserId").HasColumnType("int").IsRequired(false);
             builder.Property(x => x.Timestamp).HasColumnName(@"Timestamp").HasColumnType("datetime").IsRequired();
 
             // Foreign keys

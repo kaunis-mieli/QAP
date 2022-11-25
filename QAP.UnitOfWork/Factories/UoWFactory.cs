@@ -20,19 +20,33 @@ namespace QAP.UnitOfWork.Factories
             RepositoryFactory = new RepositoryFactory(context);
         }
 
-        public ProblemInstanceUnitOfWork ProblemInstanceUnitOfWork
+        public ProblemUnitOfWork ProblemUnitOfWork
         {
             get
             {
                 if (problemInstanceUnitOfWork is null)
                 {
-                    problemInstanceUnitOfWork = new ProblemInstanceUnitOfWork(this);
+                    problemInstanceUnitOfWork = new ProblemUnitOfWork(this);
                 }
 
                 return problemInstanceUnitOfWork;
             }
         }
-        ProblemInstanceUnitOfWork problemInstanceUnitOfWork;
+        ProblemUnitOfWork problemInstanceUnitOfWork;
+
+        public ProblemSolverUnitOfWork ProblemSolverUnitOfWork
+        {
+            get
+            {
+                if (problemSolverUnitOfWork is null)
+                {
+                    problemSolverUnitOfWork = new ProblemSolverUnitOfWork(this);
+                }
+
+                return problemSolverUnitOfWork;
+            }
+        }
+        ProblemSolverUnitOfWork problemSolverUnitOfWork;
 
         public PermutationUnitOfWork PermutationUnitOfWork
         {

@@ -20,18 +20,16 @@ namespace QAP.DataContext
 
     public interface IQAPDBContext : IDisposable
     {
-        DbSet<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation
+        DbSet<AlgorithmVersion> AlgorithmVersions { get; set; } // AlgorithmVersion
         DbSet<auth_User> auth_Users { get; set; } // User
         DbSet<auth_UserLogin> auth_UserLogins { get; set; } // UserLogin
-        DbSet<Configuration> Configurations { get; set; } // Configuration
         DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
-        DbSet<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion
         DbSet<const_State> const_States { get; set; } // State
         DbSet<Multiverse> Multiverses { get; set; } // Multiverse
         DbSet<Permutation> Permutations { get; set; } // Permutation
-        DbSet<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance
+        DbSet<Problem> Problems { get; set; } // Problem
         DbSet<Session> Sessions { get; set; } // Session
-        DbSet<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation
+        DbSet<SessionAlgorithmVersion> SessionAlgorithmVersions { get; set; } // SessionAlgorithmVersion
 
         int SaveChanges();
         int SaveChanges(bool acceptAllChangesOnSuccess);

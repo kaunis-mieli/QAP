@@ -20,35 +20,31 @@ namespace QAP.DataContext
 
     public class FakeQAPDBContext : IQAPDBContext
     {
-        public DbSet<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation
+        public DbSet<AlgorithmVersion> AlgorithmVersions { get; set; } // AlgorithmVersion
         public DbSet<auth_User> auth_Users { get; set; } // User
         public DbSet<auth_UserLogin> auth_UserLogins { get; set; } // UserLogin
-        public DbSet<Configuration> Configurations { get; set; } // Configuration
         public DbSet<const_Algorithm> const_Algorithms { get; set; } // Algorithm
-        public DbSet<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion
         public DbSet<const_State> const_States { get; set; } // State
         public DbSet<Multiverse> Multiverses { get; set; } // Multiverse
         public DbSet<Permutation> Permutations { get; set; } // Permutation
-        public DbSet<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance
+        public DbSet<Problem> Problems { get; set; } // Problem
         public DbSet<Session> Sessions { get; set; } // Session
-        public DbSet<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation
+        public DbSet<SessionAlgorithmVersion> SessionAlgorithmVersions { get; set; } // SessionAlgorithmVersion
 
         public FakeQAPDBContext()
         {
             _database = new FakeDatabaseFacade(new QAPDBContext());
 
-            AlgorithmVariations = new FakeDbSet<AlgorithmVariation>("Id");
+            AlgorithmVersions = new FakeDbSet<AlgorithmVersion>("Id");
             auth_Users = new FakeDbSet<auth_User>("Id");
             auth_UserLogins = new FakeDbSet<auth_UserLogin>("Id");
-            Configurations = new FakeDbSet<Configuration>("Id");
             const_Algorithms = new FakeDbSet<const_Algorithm>("Id");
-            const_AlgorithmVersions = new FakeDbSet<const_AlgorithmVersion>("Id");
             const_States = new FakeDbSet<const_State>("Id");
             Multiverses = new FakeDbSet<Multiverse>("Id");
             Permutations = new FakeDbSet<Permutation>("Id");
-            ProblemInstances = new FakeDbSet<ProblemInstance>("Id");
+            Problems = new FakeDbSet<Problem>("Id");
             Sessions = new FakeDbSet<Session>("Id");
-            SessionAlgorithmVariations = new FakeDbSet<SessionAlgorithmVariation>("Id");
+            SessionAlgorithmVersions = new FakeDbSet<SessionAlgorithmVersion>("Id");
 
         }
 

@@ -3,5 +3,5 @@
 public class PermutationModel
 {
     public long Cost { get; set; }
-    public int[] Permutation { get; set; }
+    public int[] Value { get; set; }
 }

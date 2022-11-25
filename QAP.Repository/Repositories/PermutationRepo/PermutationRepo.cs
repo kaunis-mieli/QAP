@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAP.Repository.Repositories.SolutionRepo;
+namespace QAP.Repository.Repositories.PermutationRepo;
 
 public class PermutationRepo : BaseRepository<Permutation>
 {

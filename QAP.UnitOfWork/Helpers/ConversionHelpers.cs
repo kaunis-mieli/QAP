@@ -1,4 +1,5 @@
-﻿using QAP.Core.Models.Permutation;
+﻿using MessagePack;
+using QAP.Core.Models.Permutation;
 using QAP.Core.Models.Problem;
 using QAP.DataContext;
 using System;
@@ -11,53 +12,60 @@ namespace QAP.UnitOfWork.Helpers
 {
     public static class ConversionHelpers
     {
-        public static List<ProblemModel> GetProblemModels(List<ProblemInstance> problems)
+        public static List<ProblemModel> GetProblemInstanceModels(List<Problem> problem)
         {
-            return problems
+            return problem
                 .Select(problem => GetProblemModel(problem))
                 .ToList();
         }
 
-        public static ProblemModel GetProblemModel(ProblemInstance problem)
+        public static ProblemModel GetProblemModel(Problem problem)
         {
-            var totalElements = problem.Size * problem.Size;
-            var matrixA = BinaryHelpers.ToOrigin<int[]>(problem.MatrixA);
-            var matrixB = BinaryHelpers.ToOrigin<int[]>(problem.MatrixB);
+            ProblemModel toReturn = null;
 
-            if (matrixA.Length != matrixB.Length || matrixA.Length != totalElements || matrixB.Length != totalElements)
+            if (problem is not null)
             {
-                throw new ArgumentException($"Problem #{problem.Id} has wrong sized matrices. |MatrixA| = {matrixA.Length}, |MatrixB| = {matrixB.Length}, Should be {totalElements}");
+                var matrixA = MessagePackSerializer.Deserialize<int[]>(problem.MatrixA);
+                var matrixB = MessagePackSerializer.Deserialize<int[]>(problem.MatrixB);
+
+                toReturn = new ProblemModel()
+                {
+                    Alias = problem.Alias,
+                    Size = problem.Size,
+                    MatrixA = new MatrixWrapper(matrixA, problem.Size),
+                    MatrixB = new MatrixWrapper(matrixB, problem.Size),
+                    InitialBestKnownCost = problem.InitialBestKnownCost
+                };
             }
 
-            return new ProblemModel()
-            {
-                Size = problem.Size,
-                MatrixA = matrixA,
-                MatrixB = matrixB,
-            };
+            return toReturn;
         }
 
-        public static List<PermutationModel> GetSolutionModels(int permutationSizeShouldBe, IEnumerable<Permutation> solutions)
+        public static List<PermutationModel> GetPermutationModels(int permutationSizeShouldBe, 
+            IEnumerable<Permutation> solutions)
         {
             return solutions
-                .Select(solution => GetSolutionModel(permutationSizeShouldBe, solution))
+                .Select(solution => GetPermutationModel(permutationSizeShouldBe, solution))
                 .ToList();
         }
 
-        public static PermutationModel GetSolutionModel(int permutationSizeShouldBe, Permutation solution)
+        public static PermutationModel GetPermutationModel(int permutationSizeShouldBe, 
+            Permutation permutation)
         {
-            var permutation = solution.Value is not null ? BinaryHelpers.ToOrigin<int[]>(solution.Value) : null;
+            var value = permutation.Value is not null ? 
+                MessagePackSerializer.Deserialize<int[]>(permutation.Value) : null;
 
             var toReturn = new PermutationModel();
 
-            if (permutation is null || permutation.Length == permutationSizeShouldBe)
+            if (value is not null && value.Length == permutationSizeShouldBe)
             {
-                toReturn.Permutation = permutation;
-                toReturn.Cost = solution.Cost;
+                toReturn.Value = value;
+                toReturn.Cost = permutation.Cost;
             }
             else
             {
-                throw new ArgumentException($"Solution #{solution.Id} has wrong size Permutation of {permutation.Length}. Should be {permutationSizeShouldBe}.");
+                throw new ArgumentException($"Permutation #{permutation.Id} has wrong size. " +
+                    $"Should be {permutationSizeShouldBe}.");
             }
 
             return toReturn;

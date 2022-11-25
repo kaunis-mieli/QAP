@@ -19,13 +19,13 @@ namespace QAP.DataContext
         // Reverse navigation
 
         /// <summary>
-        /// Child const_AlgorithmVersions where [AlgorithmVersion].[AlgorithmId] point to this entity (FK_AlgorithmVersion_Algorithm)
+        /// Child AlgorithmVersions where [AlgorithmVersion].[AlgorithmId] point to this entity (FK_AlgorithmVersion_Algorithm)
         /// </summary>
-        public virtual ICollection<const_AlgorithmVersion> const_AlgorithmVersions { get; set; } // AlgorithmVersion.FK_AlgorithmVersion_Algorithm
+        public virtual ICollection<AlgorithmVersion> AlgorithmVersions { get; set; } // AlgorithmVersion.FK_AlgorithmVersion_Algorithm
 
         public const_Algorithm()
         {
-            const_AlgorithmVersions = new List<const_AlgorithmVersion>();
+            AlgorithmVersions = new List<AlgorithmVersion>();
         }
     }
 

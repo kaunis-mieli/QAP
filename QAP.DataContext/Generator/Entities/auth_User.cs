@@ -21,9 +21,9 @@ namespace QAP.DataContext
         // Reverse navigation
 
         /// <summary>
-        /// Child AlgorithmVariations where [AlgorithmVariation].[UserId] point to this entity (FK_AlgorithmVariation_User)
+        /// Child AlgorithmVersions where [AlgorithmVersion].[UserId] point to this entity (FK_AlgorithmVersion_User)
         /// </summary>
-        public virtual ICollection<AlgorithmVariation> AlgorithmVariations { get; set; } // AlgorithmVariation.FK_AlgorithmVariation_User
+        public virtual ICollection<AlgorithmVersion> AlgorithmVersions { get; set; } // AlgorithmVersion.FK_AlgorithmVersion_User
 
         /// <summary>
         /// Child auth_UserLogins where [UserLogin].[UserId] point to this entity (FK_UserLogin_User)
@@ -36,16 +36,16 @@ namespace QAP.DataContext
         public virtual ICollection<Multiverse> Multiverses { get; set; } // Multiverse.FK_Multiverse_User
 
         /// <summary>
-        /// Child ProblemInstances where [ProblemInstance].[UserId] point to this entity (FK_ProblemInstance_User)
+        /// Child Problems where [Problem].[UserId] point to this entity (FK_Problem_User)
         /// </summary>
-        public virtual ICollection<ProblemInstance> ProblemInstances { get; set; } // ProblemInstance.FK_ProblemInstance_User
+        public virtual ICollection<Problem> Problems { get; set; } // Problem.FK_Problem_User
 
         public auth_User()
         {
             Timestamp = DateTime.Now;
-            AlgorithmVariations = new List<AlgorithmVariation>();
+            AlgorithmVersions = new List<AlgorithmVersion>();
             Multiverses = new List<Multiverse>();
-            ProblemInstances = new List<ProblemInstance>();
+            Problems = new List<Problem>();
             auth_UserLogins = new List<auth_UserLogin>();
         }
     }

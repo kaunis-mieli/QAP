@@ -19,13 +19,13 @@ namespace QAP.DataContext
         // Reverse navigation
 
         /// <summary>
-        /// Child SessionAlgorithmVariations where [SessionAlgorithmVariation].[StateId] point to this entity (FK_SessionAlgorithmVariation_State)
+        /// Child SessionAlgorithmVersions where [SessionAlgorithmVersion].[StateId] point to this entity (FK_SessionAlgorithmVersion_State)
         /// </summary>
-        public virtual ICollection<SessionAlgorithmVariation> SessionAlgorithmVariations { get; set; } // SessionAlgorithmVariation.FK_SessionAlgorithmVariation_State
+        public virtual ICollection<SessionAlgorithmVersion> SessionAlgorithmVersions { get; set; } // SessionAlgorithmVersion.FK_SessionAlgorithmVersion_State
 
         public const_State()
         {
-            SessionAlgorithmVariations = new List<SessionAlgorithmVariation>();
+            SessionAlgorithmVersions = new List<SessionAlgorithmVersion>();
         }
     }
 

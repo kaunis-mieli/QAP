@@ -14,29 +14,27 @@ BEGIN
 				[Id]				BIGINT			NOT NULL	IDENTITY,
 				[Cost]				BIGINT			NOT NULL,
 				[Value]				VARBINARY(MAX)	NOT NULL,
-				[SessionAlgorithmVariationId] INT	NOT NULL,
+				[SessionAlgorithmVersionId] INT	NOT NULL,
 				[Iteration]			INT				NOT NULL,
-				[Trial]				TINYINT			NOT NULL,
 				[Member]			INT					NULL,
 				[Timestamp]			DATETIME		NOT NULL	DEFAULT GETDATE(),
 				CONSTRAINT [PK_PermutationId]		PRIMARY KEY NONCLUSTERED ([Id]),
-				CONSTRAINT [FK_Permutation_SessionAlgorithmVariation] FOREIGN KEY ([SessionAlgorithmVariationId])
-					REFERENCES [dbo].[SessionAlgorithmVariation] ([Id])
+				CONSTRAINT [FK_Permutation_SessionAlgorithmVersion] FOREIGN KEY ([SessionAlgorithmVersionId])
+					REFERENCES [dbo].[SessionAlgorithmVersion] ([Id])
 			);
 			
 			PRINT '	Table "Permutation" has been created'
 
-
 			--Alter table
-			ALTER TABLE [dbo].[SessionAlgorithmVariation]
+			ALTER TABLE [dbo].[SessionAlgorithmVersion]
 				ADD PermutationId BIGINT NULL,
-				CONSTRAINT [FK_SessionAlgorithmVariation_Permutation] FOREIGN KEY ([PermutationId])
+				CONSTRAINT [FK_SessionAlgorithmVersion_Permutation] FOREIGN KEY ([PermutationId])
 					REFERENCES [dbo].[Permutation] ([Id]);
 
 			--Alter table
-			ALTER TABLE [dbo].[ProblemInstance]
+			ALTER TABLE [dbo].[Problem]
 				ADD PermutationId BIGINT NULL,
-				CONSTRAINT [FK_ProblemInstance_Permutation] FOREIGN KEY ([PermutationId])
+				CONSTRAINT [FK_Problem_Permutation] FOREIGN KEY ([PermutationId])
 					REFERENCES [dbo].[Permutation] ([Id]);
 		END
 		ELSE
