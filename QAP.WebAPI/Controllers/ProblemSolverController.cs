@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using QAP.Core.DTO.Base.Answer;
+using QAP.Core.DTO.Solve;
 using QAP.Core.Models.Problem;
 using QAP.UnitOfWork.Factories;
 using QAP.UnitOfWork.UnitOfWork;
@@ -8,7 +9,7 @@ using QAP.UnitOfWork.UnitOfWork;
 namespace QAP.WebAPI.Controllers;
 
 [EnableCors("CorsApi")]
-[Route("api/ProblemSolver")]
+[Route("api/problemSolver")]
 [ApiController]
 public class ProblemSolverController : ControllerBase
 {
@@ -19,11 +20,12 @@ public class ProblemSolverController : ControllerBase
         uoWFactory = _uoWFactory;
     }
 
-    [HttpGet]
-    [Route("{problemAlias}")]
-    public async Task<GenericAnswer<object>> SolveProblem(string problemAlias, int repeat)
+    [HttpPost]
+    public async Task<GenericAnswer<SolveRequestResponseDTO>> Solve(SolveRequestDTO solveRequest)
     {
-        uoWFactory.ProblemSolverUnitOfWork.Solve(problemAlias, repeat);
-        return new GenericAnswer<object>();
+        return new GenericAnswer<SolveRequestResponseDTO>() 
+        { 
+            Result = uoWFactory.ProblemSolverUnitOfWork.EnqueueSessions(solveRequest) 
+        };
     }
 }

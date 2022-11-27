@@ -10,18 +10,20 @@ using System.Threading.Tasks;
 
 namespace QAP.Repository.Repositories.MultiverseRepo;
 
-public class MultiverseRepo : BaseRepository<Permutation>
+public class MultiverseRepo : BaseRepository<Multiverse>
 {
     public MultiverseRepo(IQAPDBContext context) : base(context) { }
 
-    public Multiverse? GetMultiverseWithQueuedSessionsById(int multiverseId)
+    public Multiverse? GetMultiverseById(int multiverseId)
     {
         return context.Multiverses
             .Where(multiverse => multiverse.Id == multiverseId)
             .Include(multiverse => multiverse.Sessions)
-                .ThenInclude(session => session.SessionAlgorithmVersions.Where(sav => sav.const_State.Id == State.Queued))
+                .ThenInclude(session => session.SessionAlgorithmVersions)
                     .ThenInclude(sav => sav.AlgorithmVersion)
                         .ThenInclude(av => av.const_Algorithm)
+            .Include(multiverse => multiverse.Sessions)
+                .ThenInclude(session => session.Problem)
             .FirstOrDefault();
     }
 }

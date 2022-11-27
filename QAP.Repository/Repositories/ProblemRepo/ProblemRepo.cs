@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QAP.Core.Models.Problem;
+using QAP.Core.DTO.Problem;
 using QAP.DataContext;
 using QAP.Repository.Repositories.Base;
 using System;
@@ -14,17 +14,21 @@ public class ProblemRepo : BaseRepository<Problem>
 {
     public ProblemRepo(IQAPDBContext context) : base(context) { }
 
-    public List<string> GetAllAliases()
+    public List<ProblemRecordDTO> GetAllAliases()
     {
         return context.Problems
-            .Select(problem => problem.Alias)
-            .ToList();
+            .Select(problem => new ProblemRecordDTO() 
+            { 
+                Id = problem.Id, 
+                Alias = problem.Alias, 
+                Hash = problem.Hash 
+            }).ToList();
     }
 
-    public List<ProblemRecord> GetAllProblemRecords()
+    public List<ProblemRecordDTO> GetAllProblemRecords()
     {
         return context.Problems
-            .Select(problem => new ProblemRecord(problem.Alias, problem.Hash))
+            .Select(problem => new ProblemRecordDTO(problem.Id, problem.Alias, problem.Hash))
             .ToList();
     }
 
@@ -34,8 +38,10 @@ public class ProblemRepo : BaseRepository<Problem>
             .FirstOrDefault(problem => problem.Alias.Equals(alias));
     }
 
-    public void Add(Problem problem)
+    public List<Problem> GetProblemsByIds(List<int> ids)
     {
-        context.Problems.Add(problem);
+        return context.Problems
+            .Where(problem => ids.Contains(problem.Id))
+            .ToList();
     }
 }

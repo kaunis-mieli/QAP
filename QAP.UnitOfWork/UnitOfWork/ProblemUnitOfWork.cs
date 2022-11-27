@@ -1,4 +1,5 @@
-﻿using QAP.Core.Models.Problem;
+﻿using QAP.Core.DTO.Problem;
+using QAP.Core.Models.Problem;
 using QAP.DataContext;
 using QAP.UnitOfWork.Factories;
 using QAP.UnitOfWork.Helpers;
@@ -13,11 +14,11 @@ namespace QAP.UnitOfWork.UnitOfWork
 {
     public class ProblemUnitOfWork : BaseUnitOfWork
     {
-        private List<ProblemRecord> existingProblems;
+        private List<ProblemRecordDTO> existingProblems;
 
         public ProblemUnitOfWork(UoWFactory uoWFactory) : base(uoWFactory) { }
 
-        public List<string> GetAliases()
+        public List<ProblemRecordDTO> GetAliases()
         {
             return parentFactory.RepositoryFactory.ProblemRepo.GetAllAliases();
         }
@@ -58,7 +59,7 @@ namespace QAP.UnitOfWork.UnitOfWork
 
                 parentFactory.RepositoryFactory.ProblemRepo.Insert(problem);
 
-                existingProblems.Add(new ProblemRecord(alias, hash));
+                existingProblems.Add(new ProblemRecordDTO(0, alias, hash));
             }
             else
             {

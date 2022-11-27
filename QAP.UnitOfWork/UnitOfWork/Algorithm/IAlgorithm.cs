@@ -1,4 +1,5 @@
 ﻿using QAP.Core.Models.Problem;
+using QAP.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace QAP.UnitOfWork.UnitOfWork.Algorithm
 {
-    internal interface IAlgorithm
+    public interface IAlgorithm
     {
-        void Solve(ProblemModel problemInstanceModel);
+        void Solve();
     }
 }

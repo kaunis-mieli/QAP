@@ -1,9 +1,12 @@
 ﻿using QAP.Core.Models.Problem;
+using QAP.DataContext;
 using QAP.UnitOfWork.Factories;
+using QAP.UnitOfWork.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace QAP.UnitOfWork.UnitOfWork.Algorithm.LocalSearch;
@@ -14,12 +17,19 @@ public class LocalSearch001Config : IAlgorithmConfig
     public int Trials { get; set; }
 }
 
-public class LocalSearch001 : Algorthm<LocalSearch001Config>
+public class LocalSearch001 : Algorithm<LocalSearch001Config>
 {
-    public LocalSearch001(LocalSearch001Config config, UoWFactory uoWFactory) : base(config, uoWFactory) { }
-
-    public override void Solve(ProblemModel problemModel)
+    public LocalSearch001(SessionAlgorithmVersion sessionAlgorithmVersion, UoWFactory uoWFactory) : base(uoWFactory) 
     {
+        Configuration = sessionAlgorithmVersion.Configuration is not null ?
+            JsonSerializer.Deserialize<LocalSearch001Config>(sessionAlgorithmVersion.Configuration) :
+            JsonSerializer.Deserialize<LocalSearch001Config>(sessionAlgorithmVersion.AlgorithmVersion.DefaultConfiguration);
+    }
+
+    public override void Solve()
+    {
+        var problemModel = ConversionHelpers.GetProblemModel(sessionAlgorithmVersion.Session.Problem);
+
         Console.WriteLine("--------Problem: " + problemModel.Alias);
 
         var N = problemModel.Size;
@@ -81,7 +91,6 @@ public class LocalSearch001 : Algorthm<LocalSearch001Config>
                                             (B[P[v], P[i]] - B[P[u], P[i]] +
                                             B[P[u], P[j]] - B[P[v], P[j]]);
                         }
-
                         else
                         {
                             sum = 0;

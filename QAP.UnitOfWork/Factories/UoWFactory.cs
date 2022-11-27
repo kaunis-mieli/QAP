@@ -62,6 +62,20 @@ namespace QAP.UnitOfWork.Factories
         }
         PermutationUnitOfWork permutationUnitOfWork;
 
+        public AlgorithmUnitOfWork AlgorithmUnitOfWork
+        {
+            get
+            {
+                if (algorithmUnitOfWork is null)
+                {
+                    algorithmUnitOfWork = new AlgorithmUnitOfWork(this);
+                }
+
+                return algorithmUnitOfWork;
+            }
+        }
+        AlgorithmUnitOfWork algorithmUnitOfWork;
+
         public void Dispose()
         {
             Context = null;

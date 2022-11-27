@@ -25,13 +25,13 @@ BEGIN
 			
 			PRINT '	Table "Permutation" has been created'
 
-			--Alter table
+			--Alter table. Best permutation in SessionAlgorithm scope.
 			ALTER TABLE [dbo].[SessionAlgorithmVersion]
 				ADD PermutationId BIGINT NULL,
 				CONSTRAINT [FK_SessionAlgorithmVersion_Permutation] FOREIGN KEY ([PermutationId])
 					REFERENCES [dbo].[Permutation] ([Id]);
 
-			--Alter table
+			--Alter table. Best permutation in whole problem scope.
 			ALTER TABLE [dbo].[Problem]
 				ADD PermutationId BIGINT NULL,
 				CONSTRAINT [FK_Problem_Permutation] FOREIGN KEY ([PermutationId])

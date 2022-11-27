@@ -10,6 +10,6 @@ namespace QAP.Core.DTO.Base.Request
     [ExportTsInterface(OutputDir = "../QAP.Frontend/src/interfaces")]
     public abstract class QAPRequest : IQAPRequest
     {
-        public virtual string Token { get; set; }
+        public virtual string? Token { get; set; }
     }
 }

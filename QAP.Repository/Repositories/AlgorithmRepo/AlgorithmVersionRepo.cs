@@ -17,15 +17,22 @@ namespace QAP.Repository.Repositories.AlgorithmRepo
         {
             return context.AlgorithmVersions
                     .Include(av => av.const_Algorithm)
-                .FirstOrDefault(av => av.const_Algorithm.Alias.Equals(algorithmAlias) && 
+                .FirstOrDefault(av => av.const_Algorithm.Alias.Equals(algorithmAlias) &&
                     av.Equals(versionAlias));
         }
 
-        public AlgorithmVersion? GetAlgorithmVariation(int algorithmVersionId)
+        public AlgorithmVersion? GetAlgorithmVersion(int algorithmVersionId)
         {
             return context.AlgorithmVersions
                     .Include(av => av.const_Algorithm)
                 .FirstOrDefault(av => av.Id == algorithmVersionId);
+        }
+
+        public List<AlgorithmVersion> GetAlgorithmVersionsByIds(List<int> ids)
+        {
+            return context.AlgorithmVersions
+                .Where(av => ids.Contains(av.Id))
+                .ToList();
         }
     }
 }

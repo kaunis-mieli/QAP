@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using QAP.Repository.Repositories.AlgorithmRepo;
 
 namespace QAP.UnitOfWork.Factories;
 
@@ -20,17 +21,17 @@ public class RepositoryFactory
         context = qAPDBContext;
     }
 
-    public ProblemRepo ProblemRepo 
-    { 
+    public ProblemRepo ProblemRepo
+    {
         get
-        { 
+        {
             if (problemRepo is null)
             {
                 problemRepo = new ProblemRepo(context);
             }
 
             return problemRepo;
-        } 
+        }
     }
     ProblemRepo problemRepo;
 
@@ -89,4 +90,32 @@ public class RepositoryFactory
         }
     }
     MultiverseRepo multiverseRepo;
+
+    public AlgorithmRepo AlgorithmRepo
+    {
+        get
+        {
+            if (algorithmRepo is not null)
+            {
+                algorithmRepo = new AlgorithmRepo(context);
+            }
+
+            return AlgorithmRepo;
+        }
+    }
+    AlgorithmRepo algorithmRepo;
+
+    public AlgorithmVersionRepo AlgorithmVersionRepo
+    {
+        get
+        {
+            if (algorithmVersionRepo is not null)
+            {
+                algorithmVersionRepo = new AlgorithmVersionRepo(context);
+            }
+
+            return AlgorithmVersionRepo;
+        }
+    }
+    AlgorithmVersionRepo algorithmVersionRepo;
 }

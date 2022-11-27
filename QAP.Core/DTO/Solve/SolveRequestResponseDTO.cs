@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace QAP.Core.DTO.Base.Request
+namespace QAP.Core.DTO.Solve
 {
-    public interface IQAPRequest
+    public class SolveRequestResponseDTO
     {
-        public string? Token { get; set; }
+        public int MultiverseId { get; set; }
     }
 }
